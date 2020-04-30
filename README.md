@@ -1,5 +1,7 @@
 # CTD2020 ExatrkX
 
+![](Docs/pipeline.png)
+
 ```
             Build
      +-----------------+
