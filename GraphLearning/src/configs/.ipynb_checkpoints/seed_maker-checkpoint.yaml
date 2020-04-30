@@ -1,9 +1,0 @@
-# Input/output configuration
-output_dir: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/adjacent/seeds/high_lowcut_005
-
-# Doublet trainer model
-triplet_model_dir: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/triplets/
-model_name: high_lowcut_005
-
-# Graph building configuration
-threshold: 0.7
