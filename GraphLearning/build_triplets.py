@@ -12,7 +12,6 @@ import multiprocessing as mp
 from functools import partial
 
 # Externals
-import yaml
 import numpy as np
 import pandas as pd
 import torch
@@ -23,10 +22,10 @@ import cupyx as cpx
 import scipy as sp
 
 # Locals
-from datasets.graph import SparseGraph, save_graph
-from datasets import get_data_loaders
-from trainers import get_trainer
-from utils.data_utils import load_config_dir, load_summaries, get_data_loader, get_IDs
+from .src.datasets.graph import SparseGraph, save_graph
+from .src.datasets import get_data_loaders
+from .src.trainers import get_trainer
+from .src.utils.data_utils import load_config_dir, load_summaries, get_data_loader, get_IDs
 
 def parse_args():
     """Parse command line arguments."""
@@ -42,18 +41,7 @@ def parse_args():
     return parser.parse_args()
 
 
-
-""" OVERALL STRUCTURE
-Doublet preparation script makes graphs of (X, Ri, Ro, y, pid) -> Doublet trainer loads graphs with (X, edge_index, y)
--> Doublets trained on (X, e, y) -> Triplet preparation reads (X, Ri, Ro, y) -> Runs through doublet classifier
--> Makes graph of ([Xi,Xo,edge_score], triplet_e, y) and saves -> Triplet trainer loads graph -> Triplets trained
-"""
-
-
-def load_pid(filename):
-    return np.load(filename)["pid"]
-
-def get_edge_scores(result_dir, n_tasks, task):
+def get_edge_scores(load_path, doublet_artifacts, n_tasks, task):
     """
     - Takes config info for triplet training dataset (different from doublet training dataset),
     - Runs the dataset through the trained doublet network,
@@ -61,7 +49,7 @@ def get_edge_scores(result_dir, n_tasks, task):
     """
 
     # Load configs
-    config = load_config_dir(result_dir)
+    config = load_config_dir(doublet_artifacts)
     logging.info('Training doublets on model configuration:')
     logging.info(config)
 
@@ -85,7 +73,7 @@ def get_edge_scores(result_dir, n_tasks, task):
 
     # Load the test dataset
 
-    test_loader = get_data_loader(config, n_tasks, task)
+    test_loader = get_data_loader(load_path, n_tasks, task)
 
     # Apply the model
     test_preds, test_targets = trainer.device_predict(test_loader)
@@ -94,6 +82,8 @@ def get_edge_scores(result_dir, n_tasks, task):
     doublet_data = test_loader.dataset
     ID_data, eventnames = get_IDs(config, n_tasks, task)
 
+    print(eventnames)
+    
     return test_preds, doublet_data, ID_data, eventnames
 
 def edge_to_triplet_cupy(e):
@@ -114,19 +104,6 @@ def edge_to_triplet_cupy(e):
     e_nonzero = np.asarray(e_nonzero).astype(np.int64)
     
     return e_nonzero
-
-def edge_to_triplet(start, end, n_edges, n_hits):
-    """
-    An efficient algorithm to convert between an edge matrix and a triplet matrix
-    """
-    Ri = np.zeros((n_hits+1, n_edges))
-    Ro = np.zeros((n_hits+1, n_edges))
-    Ri[start, np.arange(n_edges)]=1
-    Ro[end, np.arange(n_edges)]=1
-    Riwhere = [np.nonzero(t)[0] for t in Ri]
-    Rowhere = [np.nonzero(t)[0] for t in Ro]
-    E = [np.stack(np.meshgrid(j, i),-1).reshape(-1,2) for i,j in zip(Riwhere, Rowhere)]
-    return np.concatenate(E).T
 
 def construct_triplet_graph(x, e, y, I, pid, o, include_scores, threshold):
     """
@@ -178,12 +155,12 @@ def process_event(data_row, output_dir, include_scores, threshold):
     np.savez(file_name, X = graph.X, e = graph.e, y = graph.y)
     np.savez(file_name_ID, I = graph.I, pid=graph.pid)
 
-def process_data(output_dir, result_dir, args, include_scores=True, threshold=0):
+def process_data(save_path, load_path, doublet_artifacts, include_scores, threshold, n_tasks, task):
 
     logging.info("Processing result data")
 
     # Calculate edge scores from best doublet model checkpoint
-    edge_scores, doublet_data, ID_data, eventnames = get_edge_scores(result_dir, args.n_tasks, args.task)
+    edge_scores, doublet_data, ID_data, eventnames = get_edge_scores(load_path, doublet_artifacts, n_tasks, task)
     all_data = np.array([[gi.x.numpy(), gi.edge_index.numpy(), gi.y.numpy(), oi.numpy(), ID[0], ID[1]]
                     for gi, oi, ID in zip(doublet_data, edge_scores, ID_data)])
     
@@ -199,9 +176,6 @@ def process_data(output_dir, result_dir, args, include_scores=True, threshold=0)
     print(all_data.shape)
     logging.info("Data processed")
     
-    # Process events with pool
-    n_workers = args.n_workers
-    
 #     with mp.Pool(processes=1) as pool:
 #         process_fn = partial(process_event, output_dir=output_dir, include_scores=include_scores, threshold=threshold)
 #         pool.map(process_fn, all_data)
@@ -210,32 +184,42 @@ def process_data(output_dir, result_dir, args, include_scores=True, threshold=0)
         process_event(data_row, output_dir, include_scores, threshold)
 
 
-def main():
+def main(args, force=False):
     """ Main function """
 
-    # Parse args
-    args = parse_args()
+    save_path = os.path.join(args.data_storage_path, 'triplet_graphs')
+    load_path = os.path.join(args.data_storage_path, 'doublet_graphs')    
 
-    # Setup logging
-    log_format = '%(asctime)s %(levelname)s %(message)s'
-    log_level = logging.DEBUG if args.verbose else logging.INFO
-    logging.basicConfig(level=log_level, format=log_format)
-    logging.info('Initialising')
-    if args.show_config:
-        logging.info('Command line config: %s' % config)
+#     # Setup logging
+#     log_format = '%(asctime)s %(levelname)s %(message)s'
+#     log_level = logging.DEBUG if args.verbose else logging.INFO
+#     logging.basicConfig(level=log_level, format=log_format)
+#     logging.info('Initialising')
+#     if args.show_config:
+#         logging.info('Command line config: %s' % config)
 
-    # Load config
-    with open(args.config) as f:
-        config = yaml.load(f)
-    if args.task == 0:
-        logging.info('Configuration: %s' % config)
+#     # Load config
+#     with open(args.config) as f:
+#         config = yaml.load(f)
+#     if args.task == 0:
+#         logging.info('Configuration: %s' % config)
 
-    result_dir = config['doublet_model_dir']
-    output_dir = config['output_dir']
-    include_scores = config['include_scores']
-    threshold = config['threshold']
+#     result_dir = config['doublet_model_dir']
+#     output_dir = config['output_dir']
+#     include_scores = config['include_scores']
+#     threshold = config['threshold']
 
-    process_data(output_dir, result_dir, args, include_scores, threshold)
+    event_files = [os.path.splitext(file)[0] for file in os.listdir(load_path)]
+
+    # Filter already existing event files
+    existing_files = [os.path.splitext(file)[0].split('_')[0] for file in os.listdir(save_path)]
+    if not force:
+        remaining_events = list(set(event_files) - set(existing_files))
+        print("%i events already constructed, %i remaining" % (len(set(existing_files)), len(remaining_events)))
+    else:
+        remaining_events = event_files
+
+    process_data(save_path, load_path, args.doublet_artifacts, args.include_scores, args.doublet_threshold, args.n_tasks, args.task)
 
     logging.info('Processing finished')
 
