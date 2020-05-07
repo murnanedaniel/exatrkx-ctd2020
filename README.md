@@ -8,6 +8,16 @@ Each `stage` of the pipeline can be executed separately by running `python [path
 
 ![](docs/pipeline.png)
 
+## Setting Up Environment
+
+## Installing Requirements
+
+## Example Run
+
+## Use Cases
+
+## Further Configuration and Experimentation
+
 ```
             Build
      +-----------------+
