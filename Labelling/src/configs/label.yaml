@@ -1,0 +1,38 @@
+#_________________
+# Overall pipeline
+
+name: pipeline_testing
+
+#_________________
+# Preprocessing
+
+raw_data_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/train_100_events
+data_storage: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/debugging/  # Change this name to be more descriptive
+detector_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/detectors.csv
+pt_cut: 0
+
+#_________________
+# Doublet building
+
+doublet_output_dir:
+artifact_storage_path: /global/cscratch1/sd/danieltm/ExaTrkX/doublet_models/adjacent
+emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
+filter_threshold: 0.95  # This is the threshold of the metric filter
+num_phi_sections: 8
+embed_feats: False
+augmented: False
+
+#_________________
+# Triplet building
+
+doublet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/high_003
+doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
+include_scores: True
+
+
+#_________________
+# Labelling
+
+triplet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/triplets/high_lowcut_005
+label_threshold: 0.75 # This is the threshold from the triplet GNN score
+epsilon: 0.1 # This is used in DBSCAN, and may be irrelevant if the graph edges are set to 1 above label_threshold

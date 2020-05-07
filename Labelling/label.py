@@ -46,11 +46,17 @@ def save_triplet_hitlist(triplet_data, threshold, output_dir):
     e, graph_name, o = triplet_data
     
     g_ID = np.load(graph_name[:-4] + "_ID.npz", allow_pickle=True)["I"]
-    triplet_IDs = np.hstack([g_ID[:,e[0,:]].T, g_ID[:,e[1,:]].T])[:,[0,1,3]]
-    triplet_preds = triplet_IDs[o > threshold]
-    o_preds = o[o > threshold]
+    
+    triplet_preds = np.hstack([g_ID[:,e[0,o > threshold]], g_ID[:,e[1,o > threshold]]]).T
+    
+#     triplet_IDs = np.hstack([g_ID[:,e[0,:]].T, g_ID[:,e[1,:]].T])[:,[0,1,3]]
+#     triplet_preds = triplet_IDs[o > threshold]
+    o_preds = np.hstack([o[o > threshold], o[o > threshold]]).T
 
+#     print(triplet_preds.shape, o_preds.shape)
+    
     triplet_list = np.c_[triplet_preds.astype(np.int64), o_preds]
+    
     filename = os.path.join(output_dir, os.path.splitext(os.path.basename(graph_name))[0])
     np.save(filename, triplet_list)
 
@@ -97,18 +103,17 @@ def get_edge_scores(load_path, triplet_artifacts, n_tasks, task):
      
     return test_preds, graph_dataset, graph_names
 
-def combine_event(event_name, split_names, output_dir):
+def combine_event(event_name, split_names):
     """ Concatenates the triplet list of each subgraph """
     
-    total_triplets = np.empty((0,4), dtype="int64")
+    total_triplets = np.empty((0,3))
     for i in np.where(split_names[:,0] == event_name)[0]:
         triplet_list = np.load(str(split_names[i,0]) + "_" + str(split_names[i,1]), allow_pickle=True)
         total_triplets = np.append(total_triplets, triplet_list, axis=0)
-    triplet_filename = os.path.join(output_dir,os.path.basename(event_name))
         
     return total_triplets
 
-def cluster(e_csr_bi):
+def cluster(e_csr_bi, epsilon):
     
     clustering = DBSCAN(eps=epsilon, metric="precomputed", min_samples=1).fit_predict(e_csr_bi)
     track_labels = np.vstack([np.unique(e_csr_bi.tocoo().row), clustering[np.unique(e_csr_bi.tocoo().row)]])
@@ -130,17 +135,22 @@ def convert_to_bidirectional(e_csr):
     
     return e_csr_bi
 
-def triplets_to_doublets(total_hid, total_e, total_o, label_cut):
+def triplets_to_doublets(triplet_edges, triplet_scores, label_cut):
+       
     
-    pred_triplet_hid = np.hstack([total_hid[:,total_e[0,total_o > label_cut]], total_hid[:,total_e[1,total_o > label_cut]]]).T
+    e_doublet_coo = sp.sparse.coo_matrix((triplet_edges.max()+1, triplet_edges.max()+1))
     
-    e_doublet_coo = sp.sparse.coo_matrix((total_hid.max()+1, total_hid.max()+1))
-    
-    dok = sparse.dok_matrix((e_doublet_coo.shape), dtype=e_doublet_coo.dtype)
-    dok._update(zip(zip(pred_triplet_hid[:,0], pred_triplet_hid[:,1]), [1]*pred_triplet_hid.shape[0])) # Could be converted to actual scores
+    dok = sp.sparse.dok_matrix((e_doublet_coo.shape), dtype=e_doublet_coo.dtype)
+    dok._update(zip(zip(triplet_edges[:,0], triplet_edges[:,1]), [1]*triplet_edges.shape[0])) # Could be converted to actual scores
     e_csr = dok.tocsr()
     
     return e_csr
+
+def save_labels(track_labels, event_name, output_dir):
+    
+    label_filename = os.path.join(output_dir, event_name)
+    
+    np.save(label_filename, track_labels)
     
 
 # def recombine_triplet_graphs(split_names, graph_dataset, test_preds, n_phi_segments):
@@ -177,27 +187,28 @@ def triplets_to_doublets(total_hid, total_e, total_o, label_cut):
 #     return total_X, total_e, total_o, total_hid, total_pid
 
 
-def process_event(event_name, split_names, output_dir, label_cut):
+def process_event(event_name, split_names, output_dir, label_cut, epsilon):
     
     # Recombine triplet graphs by loading all files in event
     total_triplets = combine_event(event_name, split_names)
     
-    triplet_edges = ...
-    triplet_scores = ...
+    triplet_edges = total_triplets[:,:2].T.astype(dtype='int64')
+    triplet_scores = total_triplets[:,2].T
+    
     
     # Convert triplets to doublets
-    e_csr = triplets_to_doublets(total_hid, total_e, total_o, label_cut)
+    e_csr = triplets_to_doublets(triplet_edges, triplet_scores, label_cut)
     
     # Cluster and produce track list
     e_csr_bi = convert_to_bidirectional(e_csr)
     
     # Save track labels
-    track_labels = cluster(e_csr_bi)
+    track_labels = cluster(e_csr_bi, epsilon)
     
-    save_labels(track_labels)
+    save_labels(track_labels, event_name, output_dir)
 
     
-def process_data(save_path, load_path, triplet_artifacts, label_threshold, n_tasks, task):
+def process_data(save_path, load_path, triplet_artifacts, label_threshold, epsilon, n_tasks, task):
 
     logging.info("Running inference on triplet graphs")
     
@@ -213,7 +224,7 @@ def process_data(save_path, load_path, triplet_artifacts, label_threshold, n_tas
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir, exist_ok=True)
     with mp.Pool(processes=None) as pool:
-        process_fn = partial(save_triplet_hitlist, threshold=seed_threshold, output_dir=temp_dir)
+        process_fn = partial(save_triplet_hitlist, threshold=label_threshold, output_dir=temp_dir)
         pool.map(process_fn, triplet_data)
     
     logging.info("All files saved")
@@ -232,7 +243,7 @@ def process_data(save_path, load_path, triplet_artifacts, label_threshold, n_tas
         event_names = np.unique(split_names[:,0])
 
         with mp.Pool(processes=None) as pool:
-            process_fn = partial(process_event, split_names = split_names, output_dir=save_path, label_cut=label_threshold)
+            process_fn = partial(process_event, split_names = split_names, output_dir=save_path, label_cut=label_threshold, epsilon=epsilon)
             pool.map(process_fn, event_names)
             
         if os.path.exists(temp_dir):
@@ -256,7 +267,7 @@ def main(args, force=False):
     logging.info('Initialising')
 
 
-    process_data(save_path, load_path, args.triplet_artifacts, args.label_threshold, args.n_tasks, args.task)
+    process_data(save_path, load_path, args.triplet_artifacts, args.label_threshold, args.epsilon, args.n_tasks, args.task)
 
     logging.info('Processing finished')
 

@@ -15,7 +15,7 @@ from MetricLearning.src.preprocess_with_dir import preprocess
 from MetricLearning.src.metric_learning_adjacent import build_graphs as build_doublet_graphs
 from GraphLearning import build_triplets
 from Seeding import seed
-# from Labelling import label
+from Labelling import label
 
 
     

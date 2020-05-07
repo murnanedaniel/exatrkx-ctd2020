@@ -14,7 +14,7 @@ def parse_args():
     args, remaining_args = conf_parser.parse_known_args()
     
     # Set defaults (maybe these themselves could be in a default config file in the utils folder??)
-    defaults = {'stage': 'seed', 
+    defaults = {'stage': 'seed',
                 'force': None, 
                 'task': 0,
                 'n_tasks': 1,
@@ -31,10 +31,10 @@ def parse_args():
         defaults.update(config)
     
     # Handle command-line changes to default arguments
-    parser = argparse.ArgumentParser(parents=[conf_parser])
+    parser = argparse.ArgumentParser()
     parser.set_defaults(**defaults)
     add_arg = parser.add_argument
-    
+
     add_arg('stage', help="Which stage to run.", choices=['seed', 'label', 'train', 'preprocess', 'build_doublets', 'build_triplets', 'train_embedding', 'train_doublets', 'train_triplets'], nargs='?')
     add_arg('--force', help="Specify stage to force reprocessing. All subsequent stages will be reprocessed.", nargs='?', const='all')
     add_arg('--nb-to-preprocess', help="How many subfolders of data", type=int)
@@ -45,5 +45,5 @@ def parse_args():
     add_arg('--pt-cut', help='Transverse momentum, below which tracks are excluded', type=float, default=0)
     add_arg('--task', help='Which GPU number is this script running on', type=int, default=0)
     add_arg('--n_tasks', help='Total number of GPUs available', type=int, default=1)
-    
+        
     return parser.parse_args(remaining_args)
