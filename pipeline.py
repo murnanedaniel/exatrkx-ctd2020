@@ -10,6 +10,7 @@ import yaml
 from utils.pipeline_utils import parse_args
 
 # STAGES OF PIPELINE
+sys.path.append('.')
 from MetricLearning.src.preprocess_with_dir import preprocess
 from MetricLearning.src.metric_learning_adjacent import build_graphs as build_doublet_graphs
 from GraphLearning import build_triplets
@@ -55,7 +56,7 @@ def build(args):
     ## BUILD TRIPLET GRAPHS - Apply doublet GNN model to doublet graphs for classification, construct triplets using score & cut
     # Checks for existence of triplet graphs
     
-    print('--------------------- \n Building triplet... \n--------------------')
+    print('--------------------- \n Building triplets... \n--------------------')
     
     build_triplets.main(args, force=force[force_order["build_triplets"]])
     if args.stage == 'build_triplets': return
@@ -63,8 +64,8 @@ def build(args):
     
     ## CLASSIFY TRIPLET GRAPHS FOR SEEDS - Classify, apply cut to triplet scores, print out into specified format
     # Checks for existence of seed dataset
-    if args.pipe == "seed":
-        print("Seeding...")
+    if args.stage == "seed":
+        print('--------------------- \n Seeding... \n--------------------')
         seed.main(args, force=force[force_order["seed"]])
      
         return
@@ -72,8 +73,8 @@ def build(args):
     
     ## CLASSIFY TRIPLET GRAPHS FOR TRACK LABELS - Classify, convert to doublets, construct sparse undirected matrix, run DBSCAN, print out into specified format
     
-    if args.pipe == "label":
-        print("Labelling...")
+    if args.stage == "label":
+        print('--------------------- \n Labelling... \n--------------------')
         label.main(args, force=force[force_order["label"]])
         
         
@@ -124,9 +125,9 @@ if __name__ == "__main__":
     
     args = parse_args()
     
-    if args.pipe == "seed" or args.pipe == "label":
+    if args.stage in ["seed", "label", "preprocess", "build_doublets", "build_triplets"]:
         build(args)
     
-    elif args.pipe == "train":
+    elif args.stage in ["train", "train_embedding", "train_doublets", "train_triplets"]:
         train(args)
     

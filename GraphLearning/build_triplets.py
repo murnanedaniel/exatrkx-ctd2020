@@ -10,6 +10,7 @@ import argparse
 import logging
 import multiprocessing as mp
 from functools import partial
+from time import time
 
 # Externals
 import numpy as np
@@ -27,21 +28,13 @@ from .src.datasets import get_data_loaders
 from .src.trainers import get_trainer
 from .src.utils.data_utils import load_config_dir, load_summaries, get_data_loader, get_IDs
 
-def parse_args():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser('prepareTriplets.py')
-    add_arg = parser.add_argument
-    add_arg('config', nargs='?', default='configs/prep_tripgnn.yaml')
-    add_arg('--n-workers', type=int, default=1)
-    add_arg('--task', type=int, default=0)
-    add_arg('--n-tasks', type=int, default=1)
-    add_arg('-v', '--verbose', action='store_true')
-    add_arg('--show-config', action='store_true')
-    add_arg('--interactive', action='store_true')
-    return parser.parse_args()
+if torch.cuda.is_available():
+    DEVICE='cuda'
+else:
+    DEVICE='cpu'
 
-
-def get_edge_scores(load_path, doublet_artifacts, n_tasks, task):
+    
+def get_edge_scores(load_path, existing_files, doublet_artifacts, n_tasks, task):
     """
     - Takes config info for triplet training dataset (different from doublet training dataset),
     - Runs the dataset through the trained doublet network,
@@ -59,7 +52,7 @@ def get_edge_scores(load_path, doublet_artifacts, n_tasks, task):
     summaries.loc[[best_idx]]
 
     # Build the trainer and load best checkpoint
-    task_gpu = 0
+    task_gpu = 0 if DEVICE=='cuda' else None
     trainer = get_trainer(output_dir=config['output_dir'], gpu=task_gpu, **config['trainer'])
     trainer.build_model(optimizer_config=config['optimizer'], **config['model'])
 
@@ -80,9 +73,9 @@ def get_edge_scores(load_path, doublet_artifacts, n_tasks, task):
     print("Graph prediction complete")
 #     test_preds, test_targets = [a.cpu() for a in test_preds], [a.cpu() for a in test_targets]
     doublet_data = test_loader.dataset
-    ID_data, eventnames = get_IDs(config, n_tasks, task)
+    ID_data, eventnames = get_IDs(load_path, n_tasks, task)
 
-    print(eventnames)
+#     print(eventnames)
     
     return test_preds, doublet_data, ID_data, eventnames
 
@@ -112,7 +105,7 @@ def construct_triplet_graph(x, e, y, I, pid, o, include_scores, threshold):
     """
     
     # Enforce doublet score threshold
-    if threshold > 0:
+    if threshold is not None and threshold > 0:
         e, o, y = e[:, o > threshold], o[o > threshold], y[o > threshold]
 
     # Remove self-edges
@@ -155,12 +148,12 @@ def process_event(data_row, output_dir, include_scores, threshold):
     np.savez(file_name, X = graph.X, e = graph.e, y = graph.y)
     np.savez(file_name_ID, I = graph.I, pid=graph.pid)
 
-def process_data(save_path, load_path, doublet_artifacts, include_scores, threshold, n_tasks, task):
+def process_data(save_path, load_path, existing_files, doublet_artifacts, include_scores, threshold, n_tasks, task):
 
     logging.info("Processing result data")
 
     # Calculate edge scores from best doublet model checkpoint
-    edge_scores, doublet_data, ID_data, eventnames = get_edge_scores(load_path, doublet_artifacts, n_tasks, task)
+    edge_scores, doublet_data, ID_data, eventnames = get_edge_scores(load_path, existing_files, doublet_artifacts, n_tasks, task)
     all_data = np.array([[gi.x.numpy(), gi.edge_index.numpy(), gi.y.numpy(), oi.numpy(), ID[0], ID[1]]
                     for gi, oi, ID in zip(doublet_data, edge_scores, ID_data)])
     
@@ -173,7 +166,7 @@ def process_data(save_path, load_path, doublet_artifacts, include_scores, thresh
     
     # Attach the event ID to each graph for saving
     all_data = np.c_[all_data, eventnames.T]
-    print(all_data.shape)
+    
     logging.info("Data processed")
     
 #     with mp.Pool(processes=1) as pool:
@@ -181,47 +174,38 @@ def process_data(save_path, load_path, doublet_artifacts, include_scores, thresh
 #         pool.map(process_fn, all_data)
 
     for data_row in all_data:
-        process_event(data_row, output_dir, include_scores, threshold)
+        process_event(data_row, save_path, include_scores, threshold)
 
 
 def main(args, force=False):
     """ Main function """
 
+    tic = time()
+        
     save_path = os.path.join(args.data_storage_path, 'triplet_graphs')
     load_path = os.path.join(args.data_storage_path, 'doublet_graphs')    
 
-#     # Setup logging
-#     log_format = '%(asctime)s %(levelname)s %(message)s'
-#     log_level = logging.DEBUG if args.verbose else logging.INFO
-#     logging.basicConfig(level=log_level, format=log_format)
-#     logging.info('Initialising')
-#     if args.show_config:
-#         logging.info('Command line config: %s' % config)
+    # Setup logging
+    log_format = '%(asctime)s %(levelname)s %(message)s'
+    log_level = logging.DEBUG # if args.verbose else logging.INFO
+    logging.basicConfig(level=log_level, format=log_format)
+    logging.info('Initialising')
 
-#     # Load config
-#     with open(args.config) as f:
-#         config = yaml.load(f)
-#     if args.task == 0:
-#         logging.info('Configuration: %s' % config)
-
-#     result_dir = config['doublet_model_dir']
-#     output_dir = config['output_dir']
-#     include_scores = config['include_scores']
-#     threshold = config['threshold']
-
+    os.makedirs(save_path, exist_ok=True)
     event_files = [os.path.splitext(file)[0] for file in os.listdir(load_path)]
 
     # Filter already existing event files
-    existing_files = [os.path.splitext(file)[0].split('_')[0] for file in os.listdir(save_path)]
+    existing_files = [os.path.splitext(file)[0] for file in os.listdir(save_path)]
     if not force:
-        remaining_events = list(set(event_files) - set(existing_files))
+        remaining_events = list(set([file.split('_')[0] for file in event_files]) - set([file.split('_')[0] for file in existing_files]))
         print("%i events already constructed, %i remaining" % (len(set(existing_files)), len(remaining_events)))
     else:
-        remaining_events = event_files
+        existing_files = []
+    
+    if len(remaining_events) != 0:
+        process_data(save_path, load_path, existing_files, args.doublet_artifacts, args.include_scores, args.doublet_threshold, args.n_tasks, args.task)
 
-    process_data(save_path, load_path, args.doublet_artifacts, args.include_scores, args.doublet_threshold, args.n_tasks, args.task)
-
-    logging.info('Processing finished')
+    logging.info('Processing finished, in time %f for %i events' % (time() - tic, len(remaining_events)))
 
 
 if __name__ == '__main__':

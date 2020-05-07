@@ -16,7 +16,7 @@ from torch.utils.data import Subset, DataLoader
 
 # Locals
 from torch_geometric.data import Batch
-from ..datasets.hitgraphs_sparse import HitGraphDataset
+from GraphLearning.src.datasets.hitgraphs_sparse import HitGraphDataset
 
 #------------------------------------------------------------------------------
 
@@ -76,9 +76,12 @@ def get_IDs(config_or_path, n_tasks, task):
     
     return ID_data, task_events
 
-def get_seed_data_loader(config, n_tasks, task):
+def get_seed_data_loader(config_or_path, n_tasks, task):
     # Take the test set from the back
-    full_dataset = get_dataset(config)
+    if isinstance(config_or_path, str):
+        full_dataset = get_dataset_from_path(config_or_path)
+    else:
+        full_dataset = get_dataset_from_config(config_or_path)
     full_indices = torch.arange(len(full_dataset))
     sub_indices = np.array_split(full_indices,n_tasks)[task]
     sub_dataset = Subset(full_dataset, sub_indices.tolist())

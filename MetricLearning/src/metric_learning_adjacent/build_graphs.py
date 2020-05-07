@@ -217,7 +217,7 @@ def build_one_graph(event_name,
     X = hits[feature_names].values
     vol = hits[['volume_id', 'layer_id']].values.T
     neighbors = get_emb_neighbors(X, emb_model, radius)
-    print("Constructing neighborhood of ", event_name)
+    print("Constructing neighborhood of:", event_name)
     neighbors, scores = filter_neighbors(X, vol, neighbors, filter_model, threshold)
     
     # Convert unstructured data into graph and save
@@ -239,7 +239,7 @@ def main(args, force=False):
         remaining_events = event_files
 
     # Split the files into n_tasks and select the ith split
-    task_event_files = np.array_split(remaining_events, args.n_tasks)[args.task]
+    task_event_files = [event + ".pickle" for event in np.array_split(remaining_events, args.n_tasks)[args.task]]
 
     best_emb_path, best_filter_path = os.path.join(args.artifact_storage_path, 'metric_learning_emb', 'best_model.pkl'), os.path.join(args.artifact_storage_path, 'metric_learning_filter', 'best_model.pkl')    
     

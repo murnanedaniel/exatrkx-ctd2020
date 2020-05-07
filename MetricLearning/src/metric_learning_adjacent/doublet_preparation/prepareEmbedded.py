@@ -172,7 +172,7 @@ def process_event(output_dir, event_name, hits, truth, e, scores, pt_min = 0., n
         # Write these graphs to the output directory
         try:
             file_name = os.path.join(output_dir, os.path.splitext(event_name)[0] + "_" + str(i))
-            file_name_ID = os.path.join(output_dir, os.path.splitext(event_name)[0] + "_" + str(i))
+            file_name_ID = os.path.join(output_dir, os.path.splitext(event_name)[0] + "_" + str(i) + "_ID")
         except Exception as e:
             logging.info(e)
 

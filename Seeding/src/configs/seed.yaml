@@ -1,7 +1,7 @@
 #_________________
 # Overall pipeline
 
-stage: preprocess
+# stage: seed
 name: pipeline_testing
 
 #_________________
@@ -27,11 +27,12 @@ augmented: False
 # Triplet building
 
 doublet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/high_003
-doublet_threshold: # This is the threshold of the doublet GNN score
+doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
+include_scores: True
 
 
 #_________________
 # Seeding
 
-triplet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/triplets/high_003
+triplet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/triplets/high_lowcut_005
 seed_threshold: 0.75 # This is the threshold from the triplet GNN score

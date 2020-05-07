@@ -10,10 +10,7 @@ import torch
 
 # Locals
 from .gnn_base import GNNBaseTrainer
-from utils.checks import get_weight_norm, get_grad_norm
-
-# Visualisation
-import wandb
+from ..utils.checks import get_weight_norm, get_grad_norm
 
 class SparseGNNTrainer(GNNBaseTrainer):
     """Trainer code for sparse GNN."""
@@ -100,15 +97,13 @@ class SparseGNNTrainer(GNNBaseTrainer):
         # This handles that distributed mode doesn't have access to true efficiency/purity
         if self.distributed_mode in ['ddp-file', 'ddp-mpi']: 
             self.logger.info('  Validation loss: %.3f acc: %.3f' %
-                             (summary['valid_loss'],  summary['valid_acc']))
-            wandb.log({"val loss": summary['valid_loss'], "val acc": summary['valid_acc'], "lr":self.optimizer.param_groups[0]['lr']})           
+                             (summary['valid_loss'],  summary['valid_acc']))          
 
         else:
             summary['valid_eff'] = true_pos / (true_pos + false_neg)
             summary['valid_pur'] = true_pos / (true_pos + false_pos)
             self.logger.info('  Validation loss: %.3f acc: %.3f pur: %.3f eff: %.3f' %
                              (summary['valid_loss'],  summary['valid_acc'], summary['valid_pur'], summary['valid_eff']))
-            wandb.log({"val loss": summary['valid_loss'], "val acc": summary['valid_acc'], "val pur":summary['valid_pur'], "val eff":summary['valid_eff'], "lr":self.optimizer.param_groups[0]['lr']})
         return summary
 
     @torch.no_grad()

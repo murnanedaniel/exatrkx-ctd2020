@@ -18,10 +18,7 @@ import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel
 
 # Locals
-from models import get_model
-
-# Visualisation
-import wandb
+from ..models import get_model
 
 class GNNBaseTrainer(object):
     """
@@ -142,7 +139,6 @@ class GNNBaseTrainer(object):
         best_checkpoint_id = self.summaries["valid_acc"].idxmax()
         checkpoint_dir = os.path.join(self.output_dir, 'checkpoints')
         checkpoint_file = 'model_checkpoint_%03i.pth.tar' % best_checkpoint_id
-        wandb.save(os.path.join(checkpoint_dir, checkpoint_file))
         
     def load_checkpoint(self, checkpoint_id=-1):
         """Load a model checkpoint"""
@@ -194,8 +190,6 @@ class GNNBaseTrainer(object):
               n_epochs=-1, n_total_epochs=0):
         """Run the model training"""
 
-        # Track the model progress
-        wandb.watch(self.model, log="all")
         
         # Determine initial epoch in case resuming training
         start_epoch = 0
@@ -230,11 +224,9 @@ class GNNBaseTrainer(object):
                 summary.update(self.evaluate(valid_data_loader))
                 self.lr_scheduler.step(summary['valid_loss']) # Uncomment if running automatic schedule
                 summary['valid_time'] = time.time() - start_time
-                wandb.log({"val time": summary['valid_time']})
 
             # Save summary, checkpoint
             self.save_summary(summary)
-            wandb.log({"best acc": self.summaries["valid_acc"].max()})
             if self.output_dir is not None and self.rank == 0:
                 self.write_checkpoint(checkpoint_id=epoch)
         
