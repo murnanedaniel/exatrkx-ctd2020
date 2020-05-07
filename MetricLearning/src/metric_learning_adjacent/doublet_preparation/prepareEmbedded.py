@@ -15,7 +15,11 @@ import time
 import random
 
 # Libraries
-import cupy as cp
+try:
+    import cupy as cp
+except:
+    print("Not using cupy")
+    
 import scipy as sp
 
 # Externals

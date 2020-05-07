@@ -18,8 +18,11 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from torch_scatter import scatter_add
-import cupy as cp
-import cupyx as cpx
+try:
+    import cupy as cp
+    import cupyx as cpx
+except:
+    pass
 import scipy as sp
 
 # Locals
