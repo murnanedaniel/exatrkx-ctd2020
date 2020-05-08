@@ -40,7 +40,7 @@ pip install -e .
 
 ## Directory Structure
 
-An entire `build` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `build`, `train` or `artifact` data. 
+An entire `build` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `build/` or `train/` and `artifact/` data. 
 
 ## Example Run
 
@@ -61,7 +61,7 @@ This will produce a full set of event files in the seed folder.
 
 The pipeline is set up to train the models required for the building stages. Just as in the building pipeline, one can run up to any stage of training, where stages are given as 
 ```
-preprocess --> train_embedding --> train_filtering --> train_doublets --> train_triplets
+preprocess --> train_embedding --> train_filter --> train_doublets --> train_triplets
 ```
 Each of the `train_X` stages will produce model artifacts in the folder given by the experiment name specified in the config file. Once the full training pipeline is complete, one can then run any seeding, labelling or classification stages detailed above.
 
