@@ -7,22 +7,17 @@ import os
 
 description="Use Graph Network to reconstruct tracks"
 
-USE_CUDA = False # Get this from env                              
-                                                    
-
 dependencies = [
         "numpy",
         "scipy",
         "pandas",
         "setuptools",
-#         "six",
         "matplotlib",
         "torch-scatter",
         'sklearn',
         'pyyaml>=5.1',
         'trackml@ https://github.com/LAL/trackml-library/tarball/master#egg=trackml-3',
-#         'tables',
-#         'h5py'
+
         ]
 
 if USE_CUDA: dependencies += "cupy"

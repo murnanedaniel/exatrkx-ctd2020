@@ -3,12 +3,12 @@
 
 # stage: seed
 name: pipeline_testing
+build_storage: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/debugging/  # Change this name to be more descriptive
 
 #_________________
 # Preprocessing
 
 raw_data_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/train_100_events
-data_storage: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/debugging/  # Change this name to be more descriptive
 detector_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/detectors.csv
 pt_cut: 0
 

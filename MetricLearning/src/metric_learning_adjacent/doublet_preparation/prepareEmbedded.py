@@ -15,11 +15,6 @@ import time
 import random
 
 # Libraries
-try:
-    import cupy as cp
-except:
-    print("Not using cupy")
-    
 import scipy as sp
 
 # Externals
@@ -86,7 +81,7 @@ def remove_duplicate_edges(X, e):
     r_mask = X[e[0,:],0] > X[e[1,:],0]
     e[0,r_mask], e[1,r_mask] = e[1,r_mask], e[0,r_mask]
     
-    # Use cupy sparse matrices to remove duplicates
+    # Use sparse matrices to remove duplicates
     e_sparse = sp.sparse.coo_matrix(([1]*e.shape[1], e))
 #     e_sparse = cpx.scipy.sparse.coo_matrix((cp.array([1]*e.shape[1]).astype('Float32'), (cp.array(e[0]).astype('Float32'), cp.array(e[1]).astype('Float32'))))
     e_sparse.sum_duplicates()

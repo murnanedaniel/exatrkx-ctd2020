@@ -133,7 +133,7 @@ def update_config(config, args):
 
     return config
 
-def main():
+def main(args, force=False):
     """Main function"""
 
     # Parse the command line

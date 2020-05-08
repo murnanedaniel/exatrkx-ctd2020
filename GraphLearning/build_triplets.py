@@ -18,11 +18,6 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from torch_scatter import scatter_add
-try:
-    import cupy as cp
-    import cupyx as cpx
-except:
-    pass
 import scipy as sp
 
 # Locals
@@ -33,6 +28,8 @@ from .src.utils.data_utils import load_config_dir, load_summaries, get_data_load
 
 if torch.cuda.is_available():
     DEVICE='cuda'
+    import cupy as cp
+    import cupyx as cpx
 else:
     DEVICE='cpu'
 
@@ -101,6 +98,25 @@ def edge_to_triplet_cupy(e):
     
     return e_nonzero
 
+def edge_to_triplet_scipy(e):
+    
+    e_length = e.shape[1]
+    e_coo = sp.sparse.coo_matrix(([1]*e_length, (e[0], e[1])))
+    
+    e_ones = [1]*e_length
+
+    e_in_coo = sp.sparse.coo_matrix((e_ones, (e_coo.row, np.arange(e_length))), shape=(e.max()+1,e_length))
+    e_in_csr = e_in_coo.tocsr()
+    e_out_coo = sp.sparse.coo_matrix((e_ones, (e_coo.col, np.arange(e_length))), shape=(e.max()+1,e_length))
+    e_out_csr = e_out_coo.tocsr()
+    
+    e_total = e_out_csr.T * e_in_csr
+    e_total_coo = e_total.tocoo()
+    e_nonzero = np.vstack([e_total_coo.row, e_total_coo.col])
+    e_nonzero = np.asarray(e_nonzero).astype(np.int64)
+    
+    return e_nonzero
+
 def construct_triplet_graph(x, e, y, I, pid, o, include_scores, threshold):
     """
     Very similar to doublet graph builder. May take some pruning parameters.
@@ -115,8 +131,12 @@ def construct_triplet_graph(x, e, y, I, pid, o, include_scores, threshold):
     self_edge_mask = e[0,:] == e[1,:]
     e, o, y = e[:,~self_edge_mask], o[~self_edge_mask], y[~self_edge_mask]
     
-    # Build triplet edge index matrix
-    triplet_index = edge_to_triplet_cupy(e)
+    # Build triplet edge index matrix (depending on GPU availability)
+    if DEVICE == "cuda":
+        triplet_index = edge_to_triplet_cupy(e)
+    else:
+        triplet_index = edge_to_triplet_scipy(e)
+        
     n_triplets = triplet_index.shape[1]
 
     # Concatenate features by edge index

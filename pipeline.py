@@ -9,13 +9,19 @@ import yaml
 # UTILS
 from utils.pipeline_utils import parse_args
 
-# STAGES OF PIPELINE
+# BUILDING PIPELINE IMPORTS
 sys.path.append('.')
 from MetricLearning.src.preprocess_with_dir import preprocess
 from MetricLearning.src.metric_learning_adjacent import build_graphs as build_doublet_graphs
-from GraphLearning import build_triplets
+from GraphLearning import build_triplets as build_triplet_graphs
 from Seeding import seed
 from Labelling import label
+
+# TRAINING PIPELINE IMPORTS
+from MetricLearning.src.metric_learning_adjacent.preprocess import preprocess_stage_1, preprocess_stage_2
+from MetricLearning.src.metric_learning_adjacent.train_embed import train_embed
+from MetricLearning.src.metric_learning_adjacent.train_filter import train_filter
+from GraphLearning import train
 
 
     
@@ -27,19 +33,18 @@ def build(args):
     force = [False]*len(force_order)
     if args.force is not None:
         force[force_order[args.force]:] = [True]*(len(force_order)-force_order[args.force])
-#     print(force)
+    
     
     # BUILD / INFERENCE PIPELINE
     # -------------------------------
-
     
     ## PREPROCESS DATA - Calculate cell features, select barrel, no noise, construct event-by-event files
     # Checks for existence of preprocessed dataset. 
     
     print('--------------------- \n Preprocessing... \n--------------------')
     
-    args.data_storage_path = os.path.join(args.data_storage, args.name) # Could move these definitions into preprocess.main
-#     args.artifact_storage_path = os.path.join(args.metric_artifacts, args.name)
+    args.data_storage_path = os.path.join(args.build_storage, args.name)
+
     preprocess_data_path, feature_names = preprocess.main(args, force=force[force_order["preprocess"]])
     if args.stage == 'preprocess': return
 
@@ -58,7 +63,7 @@ def build(args):
     
     print('--------------------- \n Building triplets... \n--------------------')
     
-    build_triplets.main(args, force=force[force_order["build_triplets"]])
+    build_triplet_graphs.main(args, force=force[force_order["build_triplets"]])
     if args.stage == 'build_triplets': return
     
     
@@ -83,41 +88,59 @@ def build(args):
 
 def train(args):
     
+    # Handle the logic flow of forced data re-building (i.e. ignoring existing data)
+    
+    force_order = {"all": 0, "preprocess": 1, "train_embedding": 2, "train_filter": 3, "train_doublets": 4, "traing_triplets": 5}
+    force = [False]*len(force_order)
+    if args.force is not None:
+        force[force_order[args.force]:] = [True]*(len(force_order)-force_order[args.force])
+    
+    
     # TRAIN PIPELINE
     # ------------------------------
 
-    ## PREPROCESS DATA - As above
-
+    ## PREPROCESS DATA
     
-    if args.stage == 'build_triplets': return
+    print('--------------------- \n Preprocessing... \n--------------------')
+    
+    args.data_storage_path = os.path.join(args.train_storage, args.name)
+
+    preprocess_data_path, feature_names = preprocess.main(args, force=force[force_order["preprocess"]])
+
+    print('--------------------- \n Training embedding... \n--------------------')
+    
+    ## BUILD EMBEDDING DATA
+    preprocess_stage_1.preprocess(args, force=force[force_order["train_embedding"]])
+    
     ## TRAIN EMBEDDING
-
+    train_embed.main(args, force=force[force_order["train_embedding"]])   
+    if args.stage == 'train_embedding': return
     
-    if args.stage == 'build_triplets': return
-    ## BUILD EMBEDDED SPACE
-
+    print('--------------------- \n Training filter... \n--------------------')
     
-    if args.stage == 'build_triplets': return
-    ## TRAIN FILTER
+    ## BUILD FILTERING DATA
+    preprocess_stage_2.preprocess(args, force=force[force_order["train_filter"]])
     
-    if args.stage == 'build_triplets': return
-
+    ## TRAIN FILTERING
+    train_filter.main(args, force=force[force_order["train_filter"]])
+    if args.stage == 'train_filtering': return
+    
+    print('--------------------- \n Training doublets... \n--------------------')
+    
     ## BUILD DOUBLET GRAPHS
-
+    build_doublet_graphs.main(args, force=force[force_order["train_doublets"]])  
     
-    if args.stage == 'build_triplets': return
     ## TRAIN DOUBLET GNN
-
+    train.main(args, force=force[force_order["train_doublets"]])
+    if args.stage == 'train_doublets': return
     
-    if args.stage == 'build_triplets': return
+    print('--------------------- \n Training filter... \n--------------------')
+    
     ## BUILD TRIPLET GRAPHS
-
+    build_triplet_graphs.main(args, force=force[force_order["train_triplets"]])
     
-    if args.stage == 'build_triplets': return
     ## TRAIN TRIPLET GNN
-
-
-
+    train.main(args, force=force[force_order["train_triplets"]])
 
 
 
@@ -128,6 +151,6 @@ if __name__ == "__main__":
     if args.stage in ["seed", "label", "preprocess", "build_doublets", "build_triplets"]:
         build(args)
     
-    elif args.stage in ["train", "train_embedding", "train_doublets", "train_triplets"]:
+    elif args.stage in ["train", "train_embedding", "train_filter", "train_doublets", "train_triplets"]:
         train(args)
     
