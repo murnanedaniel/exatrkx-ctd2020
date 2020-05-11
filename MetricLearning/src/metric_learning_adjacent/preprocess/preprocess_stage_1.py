@@ -34,7 +34,7 @@ def construct_dataset(paths, nb_samples, feature_names):
         targets.extend(t)
         if (i%2)==0:
             elapsed = (time.time() - t0)/60
-            remain = (nb_samples-len(hits_a)) / len(hits_a) * elapsed
+            remain = (nb_samples-len(hits_a)) / len(hits_a) * elapsed # THIS ALGORITHM IS OFF??
             print("file {:4d}, {:8d}. Elapsed: {:4.1f}m, Remain: {:4.1f}m".format(i,
                                          len(hits_a), elapsed, remain))
         if len(hits_a) > nb_samples:
@@ -200,7 +200,8 @@ def load_event(path):
     return sample
 
 def split_dataset(dataset, nb_train, nb_valid, nb_test):
-    assert len(dataset) == (nb_train + nb_valid + nb_test)
+    print(len(dataset), nb_train, nb_valid, nb_test)
+    assert len(dataset) >= (nb_train + nb_valid + nb_test)
     np.random.shuffle(dataset)
     train = dataset[:nb_train]
     valid = dataset[nb_train:(nb_train+nb_valid)]
@@ -232,13 +233,22 @@ def preprocess(experiment_name, artifact_storage, data_path, feature_names, save
         save_dataset(test, save_dir, 'test')
     return save_dir
 
-def main():
-    args = read_args()
-    preprocess(args.data_path,
-               args.save_path,
+def main(args, force=False):
+    
+    save_path = os.path.join(args.data_storage_path, 'metric_stage_1')
+    load_path = os.path.join(args.data_storage_path, 'preprocess_raw')
+    
+    preprocess(args.name,
+               args.artifact_storage_path,
+               load_path,
+               args.feature_names,
+               save_path,
                args.nb_train,
                args.nb_valid,
-               args.nb_test)
+               args.nb_test,
+               force)
 
 if __name__ == "__main__":
-    main()
+    
+    args = read_args()
+    main(args)

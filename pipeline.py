@@ -25,7 +25,7 @@ from GraphLearning import train
 
 
     
-def build(args):
+def classify(args):
     
     # Handle the logic flow of forced data re-building (i.e. ignoring existing data)
     
@@ -90,7 +90,7 @@ def train(args):
     
     # Handle the logic flow of forced data re-building (i.e. ignoring existing data)
     
-    force_order = {"all": 0, "preprocess": 1, "train_embedding": 2, "train_filter": 3, "train_doublets": 4, "traing_triplets": 5}
+    force_order = {"all": 0, "preprocess": 1, "train_embedding": 2, "train_filter": 3, "train_doublets": 4, "train_triplets": 5}
     force = [False]*len(force_order)
     if args.force is not None:
         force[force_order[args.force]:] = [True]*(len(force_order)-force_order[args.force])
@@ -110,7 +110,7 @@ def train(args):
     print('--------------------- \n Training embedding... \n--------------------')
     
     ## BUILD EMBEDDING DATA
-    preprocess_stage_1.preprocess(args, force=force[force_order["train_embedding"]])
+    preprocess_stage_1.main(args, force=force[force_order["train_embedding"]])
     
     ## TRAIN EMBEDDING
     train_embed.main(args, force=force[force_order["train_embedding"]])   
@@ -119,7 +119,7 @@ def train(args):
     print('--------------------- \n Training filter... \n--------------------')
     
     ## BUILD FILTERING DATA
-    preprocess_stage_2.preprocess(args, force=force[force_order["train_filter"]])
+    preprocess_stage_2.main(args, force=force[force_order["train_filter"]])
     
     ## TRAIN FILTERING
     train_filter.main(args, force=force[force_order["train_filter"]])
@@ -131,16 +131,16 @@ def train(args):
     build_doublet_graphs.main(args, force=force[force_order["train_doublets"]])  
     
     ## TRAIN DOUBLET GNN
-    train.main(args, force=force[force_order["train_doublets"]])
+    train.main(args, force=force[force_order["train_doublets"]], gnn='doublet')
     if args.stage == 'train_doublets': return
     
-    print('--------------------- \n Training filter... \n--------------------')
+    print('--------------------- \n Training triplets... \n--------------------')
     
     ## BUILD TRIPLET GRAPHS
     build_triplet_graphs.main(args, force=force[force_order["train_triplets"]])
     
     ## TRAIN TRIPLET GNN
-    train.main(args, force=force[force_order["train_triplets"]])
+    train.main(args, force=force[force_order["train_triplets"]], gnn='triplet')
 
 
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     args = parse_args()
     
     if args.stage in ["seed", "label", "preprocess", "build_doublets", "build_triplets"]:
-        build(args)
+        classify(args)
     
     elif args.stage in ["train", "train_embedding", "train_filter", "train_doublets", "train_triplets"]:
         train(args)

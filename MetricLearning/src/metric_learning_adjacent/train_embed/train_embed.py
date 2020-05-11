@@ -159,20 +159,12 @@ def evaluate(net, experiment_dir, batch_size, eval_loader, plot_name):
     return epoch_loss/nb_batch, epoch_score/nb_batch
 
 
-def main(name,
-         data_dir,
-         artifact_dir,
-         nb_layer=3,
-         nb_hidden=512,
-         emb_dim=8,
-         batch_size=2000,
-         lr_start=0.001,
-         max_nb_epochs=800,
-         evaluate_only=False,
-         force=False):
+def main(args, force=False):
 
-  experiment_dir = os.path.join(artifact_dir, 'metric_learning_emb')
+  experiment_dir = os.path.join(args.artifact_storage_path, 'metric_learning_emb')
   
+  load_path = os.path.join(args.data_storage_path, 'metric_stage_1')
+    
   # Maybe return previously trained model
   best_net_name = os.path.join(experiment_dir, 'best_model.pkl')
   if os.path.isfile(best_net_name) and (not force):
@@ -181,14 +173,14 @@ def main(name,
       print("Best model loaded from previous run. Not forcing training.")
       return net
 
-  utils.initialize_experiment_if_needed(experiment_dir, evaluate_only)
+  utils.initialize_experiment_if_needed(experiment_dir, evaluate_only=False)
   utils.initialize_logger(experiment_dir)
 
 
-  train_path = os.path.join(data_dir, 'train.pickle')
-  valid_path = os.path.join(data_dir, 'valid.pickle')
-  test_path  = os.path.join(data_dir, 'test.pickle')
-  stats_path = os.path.join(data_dir, 'stats.yml')
+  train_path = os.path.join(load_path, 'train.pickle')
+  valid_path = os.path.join(load_path, 'valid.pickle')
+  test_path  = os.path.join(load_path, 'test.pickle')
+  stats_path = os.path.join(load_path, 'stats.yml')
 
   train_data = Hit_Pair_Dataset(train_path, 10**8)
   valid_data = Hit_Pair_Dataset(valid_path, 10**8)
@@ -196,18 +188,18 @@ def main(name,
 
 
   train_dataloader = DataLoader(train_data,
-                                batch_size=batch_size,
+                                batch_size=args.batch_size,
                                 shuffle=True,
                                 drop_last=True,
                                 pin_memory=True,
                                 num_workers=8)
   valid_dataloader = DataLoader(valid_data,
-                                batch_size=batch_size,
+                                batch_size=args.batch_size,
                                 drop_last=True,
                                 pin_memory=True,
                                 num_workers=8)
   test_dataloader  = DataLoader(test_data,
-                                batch_size=batch_size,
+                                batch_size=args.batch_size,
                                 drop_last=True,
                                 pin_memory=True,
                                 num_workers=8)
@@ -215,9 +207,9 @@ def main(name,
   net = utils.create_or_restore_model(
                                     experiment_dir, 
                                     train_data.get_dim(),
-                                    nb_hidden, 
-                                    nb_layer,
-                                    emb_dim,
+                                    args.nb_hidden, 
+                                    args.nb_layer,
+                                    args.emb_dim,
                                     stats_path
                                     )
   net.to(DEVICE)
@@ -229,9 +221,9 @@ def main(name,
     
 
   train(net,
-        lr_start,
-        batch_size,
-        max_nb_epochs,
+        args.lr_start,
+        args.batch_size,
+        args.max_nb_epochs,
         experiment_dir,
         train_dataloader,
         valid_dataloader)
@@ -242,11 +234,13 @@ def main(name,
     logging.warning("\nBest model loaded for evaluation on test set.")
   except:
     logging.warning("\nCould not load best model for test set. Using current.")
-  test_stats = evaluate(net, experiment_dir, batch_size, test_dataloader, TEST_NAME)
+  test_stats = evaluate(net, experiment_dir, args.batch_size, test_dataloader, TEST_NAME)
   utils.save_test_stats(experiment_dir, test_stats)
   logging.info("Test score:  {:3.2f}".format(test_stats[1]))
 
   return net
 
 if __name__ == "__main__":
-  main()
+
+    args = read_args()
+    main(args)

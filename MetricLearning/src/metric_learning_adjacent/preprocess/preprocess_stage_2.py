@@ -9,6 +9,8 @@ from sklearn.neighbors import KDTree
 
 import torch
 
+from ..train_embed.utils_experiment import load_model as load_embed_model
+
 if torch.cuda.is_available():
     DEVICE='cuda'
 else:
@@ -280,7 +282,7 @@ def load_event(path):
     return sample
 
 def split_dataset(dataset, nb_train, nb_valid, nb_test):
-    assert len(dataset) == (nb_train + nb_valid + nb_test)
+    assert len(dataset) >= (nb_train + nb_valid + nb_test)
     np.random.shuffle(dataset)
     train = dataset[:nb_train]
     valid = dataset[nb_train:(nb_train+nb_valid)]
@@ -290,12 +292,10 @@ def split_dataset(dataset, nb_train, nb_valid, nb_test):
 #############################################
 #                   MAIN                    #
 #############################################
-def preprocess(experiment_name, 
-               artifact_storage,
+def preprocess(artifact_storage,
                data_path,
-               feature_names,
-               emb_model,
                save_dir,
+               feature_names,
                nb_train,
                nb_valid,
                nb_test,
@@ -310,6 +310,10 @@ def preprocess(experiment_name,
         shuffle(event_paths)
 
         nb_samples = nb_train + nb_valid + nb_test
+        
+        best_emb_path = os.path.join(artifact_storage, 'metric_learning_emb', 'best_model.pkl')
+        emb_model = load_embed_model(best_emb_path, DEVICE)
+    
         dataset, stats = preprocess_dataset(event_paths,
                                             nb_samples,
                                             feature_names,
@@ -323,13 +327,20 @@ def preprocess(experiment_name,
         save_dataset(test, save_dir, 'test')
     return save_dir
 
-def main():
-    args = read_args()
-    preprocess(args.data_path,
-               args.save_path,
+def main(args, force=False):
+    
+    save_path = os.path.join(args.data_storage_path, 'metric_stage_2')
+    load_path = os.path.join(args.data_storage_path, 'preprocess_raw')
+    
+    preprocess(args.artifact_storage_path,
+               load_path,
+               save_path,
+               args.feature_names,
                args.nb_train,
                args.nb_valid,
-               args.nb_test)
+               args.nb_test,
+               force)
 
 if __name__ == "__main__":
-    main()
+    args = read_args()
+    main(args)

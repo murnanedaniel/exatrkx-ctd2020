@@ -22,7 +22,7 @@ conda activate exatrkx
 conda install nb_conda_kernels
 ```
 
-## Installing Requirements
+## Installation
 
 To leverage all available resources in your system, there are two versions of some functions in this library - one compatible with CUDA GPU acceleration, and one for CPU operations. To install correctly, first run
 ```
@@ -40,7 +40,7 @@ pip install -e .
 
 ## Directory Structure
 
-An entire `build` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `build/` or `train/` and `artifact/` data. 
+An entire `classify` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `classify/` or `train/` and `artifact/` data. 
 
 ## Example Run
 

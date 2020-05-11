@@ -130,21 +130,16 @@ def update_config(config, args):
 
     return config
 
-def main(args, force=False, gnn=None):
+def main(args, force=False):
     """Main function"""
 
-    # This is a short-term fix to port most of the training code verbatim
-    config = {}
-    if gnn is not None:
-        for k, v in args[gnn].items():
-            config[k] = v
-        config['data']['input_dir'] = os.path.join(args.data_storage_path, gnn+ '_graphs')
-    
-    config['output_dir'] = os.path.join(args.artifact_storage_path, 'doublet_gnn')
-    
     # Initialize distributed workers
     rank, n_ranks = init_workers(args.distributed)
 
+    # Load configuration
+    config = load_config(args.config, output_dir=args.output_dir,
+                         n_ranks=n_ranks)
+    config = update_config(config, args)
     os.makedirs(config['output_dir'], exist_ok=True)
 
     # Setup logging
@@ -160,10 +155,10 @@ def main(args, force=False, gnn=None):
             logging.info('Using distributed mode: %s', args.distributed)
 
     # Reproducible training [NOTE, doesn't full work on GPU]
-#     torch.manual_seed(args.seed)
-#     torch.backends.cudnn.deterministic = True
-#     torch.backends.cudnn.benchmark = False
-#     np.random.seed(args.seed + 10)
+    torch.manual_seed(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    np.random.seed(args.seed + 10)
 
     # Save configuration in the outptut directory
     if rank == 0:

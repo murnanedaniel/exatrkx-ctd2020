@@ -22,7 +22,11 @@ def parse_args():
                 'doublet_threshold': 0,
                 'nb_to_process': -1,
                 'feature_names': ['x','y','z','cell_count', 'cell_val',
-                     'leta', 'lphi', 'lx', 'ly', 'lz', 'geta', 'gphi']}
+                     'leta', 'lphi', 'lx', 'ly', 'lz', 'geta', 'gphi'],
+                'rank': 0,
+                'n_ranks': 1,
+                'verbose': False
+                }
     
     # Handle config file changes to default arguments
     with open(args.config_file) as f:
@@ -35,7 +39,7 @@ def parse_args():
     parser.set_defaults(**defaults)
     add_arg = parser.add_argument
 
-    add_arg('stage', help="Which stage to run.", choices=['seed', 'label', 'train', 'preprocess', 'build_doublets', 'build_triplets', 'train_embedding', 'train_doublets', 'train_triplets'], nargs='?')
+    add_arg('stage', help="Which stage to run.", choices=['seed', 'label', 'train', 'preprocess', 'build_doublets', 'build_triplets', 'train_embedding', 'train_filter', 'train_doublets', 'train_triplets'], nargs='?')
     add_arg('--force', help="Specify stage to force reprocessing. All subsequent stages will be reprocessed.", nargs='?', const='all')
     add_arg('--nb-to-preprocess', help="How many subfolders of data", type=int)
     
@@ -45,5 +49,8 @@ def parse_args():
     add_arg('--pt-cut', help='Transverse momentum, below which tracks are excluded', type=float, default=0)
     add_arg('--task', help='Which GPU number is this script running on', type=int, default=0)
     add_arg('--n_tasks', help='Total number of GPUs available', type=int, default=1)
+    
+    add_arg('--distributed', choices=['ddp-file', 'ddp-mpi', 'cray'])
+    add_arg('-v', '--verbose', action='store_true')
         
     return parser.parse_args(remaining_args)
