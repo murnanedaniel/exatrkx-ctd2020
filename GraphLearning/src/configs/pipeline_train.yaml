@@ -29,13 +29,14 @@ max_nb_epochs: 800
 # GNN Training
 
 doublet:
+    resume: False
     trainer:
         name: gnn_sparse
 
     data:
         name: hitgraphs_sparse
-        n_train: 56000
-        n_valid: 1600
+        n_train: 500
+        n_valid: 100
         real_weight: 2.5   # 0.5 / 0.2
         batch_size: 4
         n_workers: 4
@@ -58,13 +59,14 @@ doublet:
         n_total_epochs: 90
 
 triplet:
+    resume: False
     trainer:
         name: gnn_sparse
 
     data:
         name: hitgraphs_sparse
-        n_train: 7000
-        n_valid: 500
+        n_train: 500
+        n_valid: 100
         real_weight: 1   # 0.5 / 0.2
         batch_size: 1
         n_workers: 4

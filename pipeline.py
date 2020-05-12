@@ -21,7 +21,7 @@ from Labelling import label
 from MetricLearning.src.metric_learning_adjacent.preprocess import preprocess_stage_1, preprocess_stage_2
 from MetricLearning.src.metric_learning_adjacent.train_embed import train_embed
 from MetricLearning.src.metric_learning_adjacent.train_filter import train_filter
-from GraphLearning import train
+from GraphLearning import train as train_gnn
 
 
     
@@ -131,7 +131,7 @@ def train(args):
     build_doublet_graphs.main(args, force=force[force_order["train_doublets"]])  
     
     ## TRAIN DOUBLET GNN
-    train.main(args, force=force[force_order["train_doublets"]], gnn='doublet')
+    train_gnn.main(args, force=force[force_order["train_doublets"]], gnn='doublet')
     if args.stage == 'train_doublets': return
     
     print('--------------------- \n Training triplets... \n--------------------')
@@ -140,7 +140,7 @@ def train(args):
     build_triplet_graphs.main(args, force=force[force_order["train_triplets"]])
     
     ## TRAIN TRIPLET GNN
-    train.main(args, force=force[force_order["train_triplets"]], gnn='triplet')
+    train_gnn.main(args, force=force[force_order["train_triplets"]], gnn='triplet')
 
 
 

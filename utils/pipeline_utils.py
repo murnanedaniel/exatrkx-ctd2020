@@ -25,7 +25,8 @@ def parse_args():
                      'leta', 'lphi', 'lx', 'ly', 'lz', 'geta', 'gphi'],
                 'rank': 0,
                 'n_ranks': 1,
-                'verbose': False
+                'verbose': False,
+                'resume': False
                 }
     
     # Handle config file changes to default arguments
@@ -52,5 +53,8 @@ def parse_args():
     
     add_arg('--distributed', choices=['ddp-file', 'ddp-mpi', 'cray'])
     add_arg('-v', '--verbose', action='store_true')
+    add_arg('--rank-gpu', action='store_true')
+    add_arg('--ranks-per-node', default=8)
+    add_arg('--gpu', type=int)
         
     return parser.parse_args(remaining_args)

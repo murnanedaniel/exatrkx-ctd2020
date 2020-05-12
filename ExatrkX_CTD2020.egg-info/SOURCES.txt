@@ -1,7 +1,0 @@
-README.md
-setup.py
-ExatrkX_CTD2020.egg-info/PKG-INFO
-ExatrkX_CTD2020.egg-info/SOURCES.txt
-ExatrkX_CTD2020.egg-info/dependency_links.txt
-ExatrkX_CTD2020.egg-info/requires.txt
-ExatrkX_CTD2020.egg-info/top_level.txt

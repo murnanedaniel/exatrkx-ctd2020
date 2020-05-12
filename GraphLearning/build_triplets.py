@@ -210,7 +210,7 @@ def main(args, force=False):
 
     # Setup logging
     log_format = '%(asctime)s %(levelname)s %(message)s'
-    log_level = logging.DEBUG # if args.verbose else logging.INFO
+    log_level = logging.INFO # if args.verbose else logging.INFO
     logging.basicConfig(level=log_level, format=log_format)
     logging.info('Initialising')
 
@@ -219,8 +219,9 @@ def main(args, force=False):
 
     # Filter already existing event files
     existing_files = [os.path.splitext(file)[0] for file in os.listdir(save_path)]
+    remaining_events = list(set([file.split('_')[0] for file in event_files]) - set([file.split('_')[0] for file in existing_files]))
+    
     if not force:
-        remaining_events = list(set([file.split('_')[0] for file in event_files]) - set([file.split('_')[0] for file in existing_files]))
         print("%i events already constructed, %i remaining" % (len(set(existing_files)), len(remaining_events)))
     else:
         existing_files = []

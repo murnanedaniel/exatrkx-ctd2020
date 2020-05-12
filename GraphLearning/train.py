@@ -136,7 +136,7 @@ def main(args, force=False, gnn=None):
     # This is a short-term fix to port most of the training code verbatim
     config = {}
     if gnn is not None:
-        for k, v in args[gnn].items():
+        for k, v in vars(args)[gnn].items():
             config[k] = v
         config['data']['input_dir'] = os.path.join(args.data_storage_path, gnn+ '_graphs')
     
@@ -146,13 +146,17 @@ def main(args, force=False, gnn=None):
     rank, n_ranks = init_workers(args.distributed)
 
     os.makedirs(config['output_dir'], exist_ok=True)
-
+    
+    if(len(os.path.join(config['output_dir'], 'checkpoints')) > 0 and not force):
+        print(gnn, "checkpoints already exist. Not forcing training.")
+        return
+    
     # Setup logging
     config_logging(verbose=args.verbose, output_dir=config['output_dir'],
-                   append=args.resume, rank=rank)
+                   append=config['resume'], rank=rank)
     logging.info('Initialized rank %i out of %i', rank, n_ranks)
-    if args.show_config and (rank == 0):
-        logging.info('Command line config: %s' % args)
+#     if args.show_config and (rank == 0):
+#         logging.info('Command line config: %s' % args)
     if rank == 0:
         logging.info('Configuration: %s', config)
         logging.info('Saving job outputs to %s', config['output_dir'])
