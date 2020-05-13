@@ -91,6 +91,5 @@ preprocess --> train_embedding --> train_filter --> train_doublets --> train_tri
 ```
 Each of the `train_X` stages will produce model artifacts in the folder given by the experiment name specified in the config file. Once the full training pipeline is complete, one can then run any seeding, labelling or classification stages detailed above.
 
-N.B. Each stage of training requires intermediate data files to be created (training data must be assembled into graphs, etc. to be trained), which will be deleted after it is no longer needed. You can turn off this deletion in the training config, but it should not be needed
 
 ## Further Configuration and Experimentation
