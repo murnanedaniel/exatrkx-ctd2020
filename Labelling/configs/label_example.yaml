@@ -1,0 +1,35 @@
+#_________________
+# Overall pipeline
+
+name: Labelling_Example
+data_storage_path: /data/storage/path/  
+
+#_________________
+# Preprocessing
+
+raw_data_path: /path/to/trackml/train_100_events
+detector_path: /path/to/trackml/detectors.csv
+pt_cut: 0
+
+#_________________
+# Doublet building
+
+artifact_storage_path: /path/to/artifacts
+emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
+filter_threshold: 0.95  # This is the threshold of the metric filter
+num_phi_sections: 8
+embed_feats: False
+augmented: False
+
+#_________________
+# Triplet building
+
+doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
+include_scores: True
+
+
+#_________________
+# Labelling
+
+label_threshold: 0.75 # This is the threshold from the triplet GNN score
+epsilon: 0.1 # This is used in DBSCAN, and may be irrelevant if the graph edges are set to 1 above label_threshold

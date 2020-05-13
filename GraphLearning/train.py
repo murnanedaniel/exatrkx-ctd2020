@@ -140,7 +140,7 @@ def main(args, force=False, gnn=None):
             config[k] = v
         config['data']['input_dir'] = os.path.join(args.data_storage_path, gnn+ '_graphs')
     
-    config['output_dir'] = os.path.join(args.artifact_storage_path, 'doublet_gnn')
+    config['output_dir'] = os.path.join(args.artifact_storage_path, gnn+'_gnn')
     
     # Initialize distributed workers
     rank, n_ranks = init_workers(args.distributed)

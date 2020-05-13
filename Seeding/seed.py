@@ -152,7 +152,9 @@ def main(args, force=False):
     tic = time()
     
     save_path = os.path.join(args.data_storage_path, 'seeds')
-    load_path = os.path.join(args.data_storage_path, 'triplet_graphs')    
+    load_path = os.path.join(args.data_storage_path, 'triplet_graphs')
+    
+    artifact_path = os.path.join(args.artifact_storage_path, 'triplet_gnn')
 
     os.makedirs(save_path, exist_ok=True)
     
@@ -163,7 +165,7 @@ def main(args, force=False):
     logging.info('Initialising')
 
 
-    process_data(save_path, load_path, args.triplet_artifacts, args.seed_threshold, args.n_tasks, args.task)
+    process_data(save_path, load_path, artifact_path, args.seed_threshold, args.n_tasks, args.task)
 
     logging.info('Processing finished')
 

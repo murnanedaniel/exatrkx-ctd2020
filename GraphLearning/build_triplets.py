@@ -206,7 +206,9 @@ def main(args, force=False):
     tic = time()
         
     save_path = os.path.join(args.data_storage_path, 'triplet_graphs')
-    load_path = os.path.join(args.data_storage_path, 'doublet_graphs')    
+    load_path = os.path.join(args.data_storage_path, 'doublet_graphs')
+    
+    artifact_path = os.path.join(args.artifact_storage_path, 'doublet_gnn')
 
     # Setup logging
     log_format = '%(asctime)s %(levelname)s %(message)s'
@@ -227,7 +229,7 @@ def main(args, force=False):
         existing_files = []
     
     if len(remaining_events) != 0:
-        process_data(save_path, load_path, existing_files, args.doublet_artifacts, args.include_scores, args.doublet_threshold, args.n_tasks, args.task)
+        process_data(save_path, load_path, existing_files, artifact_path, args.include_scores, args.doublet_threshold, args.n_tasks, args.task)
 
     logging.info('Processing finished, in time %f for %i events' % (time() - tic, len(remaining_events)))
 

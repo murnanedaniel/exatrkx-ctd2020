@@ -44,9 +44,9 @@ An entire `classify` or `train` pipeline can be run from the root directory usin
 
 ## Example Run
 
-To run the full pipeline to build seeds from TrackML data contained in `/path/to/trackml-data` (which can be downloaded from [Kaggle](https://www.kaggle.com/c/trackml-particle-identification), we first need model files that will be used for the learned embedding and GNN classifications. These four folders (embedding, filter, doublet GNN & triplet GNN) can be downloaded from [NEED TO CONFIRM DOWNLOAD LOCATION](www.google.com).
+To run the full pipeline to build seeds from TrackML data contained in `/path/to/trackml-data` (which can be downloaded from [Kaggle](https://www.kaggle.com/c/trackml-particle-identification)), we first need model files that will be used for the learned embedding and GNN classifications. These four folders (embedding, filter, doublet GNN & triplet GNN) can be downloaded from [NEED TO CONFIRM DOWNLOAD LOCATION](www.google.com).
 
-Assuming these have been downloaded and stored in `/path/to/artifacts`, we alter a config file to point to these locations, as well as save paths for intermediate data and final seed data. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "My_First_Run" is in [the seed config folder](Seeding/src/configs). We run
+Assuming these have been downloaded and stored in `/artifact/storage/path/[metric_learning_emb, metric_learning_filter, doublet_gnn, triplet_gnn]`, we alter a config file to point to `/artifact/storage/path`, as well as a intermediate data and final seed data `/data/storage/path/`. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "Seeding_Example" is in [the seed config folder](Seeding/src/configs). We run
 ```
 python pipeline.py Seeding/config/seed_example.yaml seed
 ```
