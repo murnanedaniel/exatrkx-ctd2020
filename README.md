@@ -40,7 +40,7 @@ pip install -e .
 
 ## Directory Structure
 
-An entire `classify` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `classify/` or `train/` and `artifact/` data. 
+An entire `classify` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `classify/` or `train/` and `artifact/` data.
 
 ## Example Run
 
@@ -48,14 +48,20 @@ To run the full pipeline to build seeds from TrackML data contained in `/path/to
 
 Assuming these have been downloaded and stored in `/path/to/artifacts`, we alter a config file to point to these locations, as well as save paths for intermediate data and final seed data. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "My_First_Run" is in [the seed config folder](Seeding/src/configs). We run
 ```
-python pipeline.py path/to/config/seed_example.yaml seed
+python pipeline.py Seeding/config/seed_example.yaml seed
 ```
 
-This will produce a full set of event files in the seed folder.
+This will produce a full set of event files in the seed folder (note that seeding is the default, so the `seed` specification is actually unnecessary in this case).
 
 ## Other Use Cases
 
 ### Labelling
+
+Similar to the seeding case, once model artifacts are available (through download or by running the `train` pipeline), run
+```
+python pipeline.py Label/config/label_example.yaml label
+```
+to produce sets of labels in `data/storage/path/classify/labels`.
 
 ### Training
 
