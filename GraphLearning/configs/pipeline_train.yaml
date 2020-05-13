@@ -2,14 +2,14 @@
 # Overall pipeline
 
 # stage: seed
-name: train_testing
-train_storage: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/  # Change this name to be more descriptive
+name: Training_Example
+data_storage_path: /data/storage/path/  # Change this name to be more descriptive
 
 #_________________
 # Preprocessing
 
-raw_data_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/train_100_events
-detector_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/detectors.csv
+raw_data_path: /path/to/trackml/train_100_events
+detector_path: /path/to/trackml/detectors.csv
 pt_cut: 0
 
 #_________________
@@ -92,7 +92,6 @@ triplet:
 # Doublet building
 
 doublet_output_dir:
-artifact_storage_path: /global/cscratch1/sd/danieltm/ExaTrkX/doublet_models/adjacent
 emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
 filter_threshold: 0.95  # This is the threshold of the metric filter
 num_phi_sections: 8
@@ -102,13 +101,5 @@ augmented: False
 #_________________
 # Triplet building
 
-doublet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/high_003
 doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
 include_scores: True
-
-
-#_________________
-# Seeding
-
-triplet_artifacts: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/results/triplets/high_lowcut_005
-seed_threshold: 0.75 # This is the threshold from the triplet GNN score
