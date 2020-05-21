@@ -32,10 +32,14 @@ to get your CUDA version. If it returns an error, you do not have GPU enabled, t
 ```
 pip install --user -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html -f https://pytorch-geometric.com/whl/torch-1.5.0.html
 ```
-Finally run the setup to install all other packages
+Finally run the setup to ensure dependencies are available:
 
 ```
 pip install -e .
+```
+If you have CUDA available, and wish to use the accelerated versions of the pipeline, you will also need CuPy:
+```
+pip install cupy
 ```
 
 ## Directory Structure
