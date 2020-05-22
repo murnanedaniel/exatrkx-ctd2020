@@ -52,9 +52,9 @@ To run the full pipeline to build seeds from TrackML data contained in `/path/to
 
 ### 1. Run Training Pipeline
 
-Train the models yourself by including the TrackML and data storage paths in `GraphLearning/config/pipeline_train.yaml`, then run
+Train the models yourself by including the TrackML and data storage paths in `GraphLearning/configs/pipeline_train.yaml`, then run
 ```
-python pipeline.py GraphLearning/config/pipeline_train.yaml train
+python pipeline.py GraphLearning/configs/pipeline_train.yaml train
 ```
 to get model artifacts saved into the folder `data/storage/path/artifacts/Training_Example`, which can be pointed to in the next step.
 
