@@ -1,6 +1,6 @@
 # CTD2020 ExatrkX
 
-Each `stage` of the pipeline can be executed separately by running `python pipeline.py [path/to/config]` followed by one of the stages:
+Each `stage` of the pipeline can be executed separately by running `python pipeline.py [path/to/configs]` followed by one of the stages:
 
 <pre>
       <a href="MetricLearning/src/preprocess_with_dir" title="Preprocessing function">preprocess</a>     -->     <a href="MetricLearning/src/metric_learning_adjacent" title="Doublet building function">build_doublets</a>    -->    <a href="GraphLearning/src/" title="Triplet building function">build_triplets</a>        -->      <a href="Seeding/src" title="Seeding function function">seed</a>     or   <a href="Labelling" title="Labelling function">label</a>
@@ -62,9 +62,9 @@ to get model artifacts saved into the folder `data/storage/path/artifacts/Traini
 
 These four folders (embedding, filter, doublet GNN & triplet GNN) can be downloaded from [NEED TO CONFIRM DOWNLOAD LOCATION](www.google.com).
 
-Assuming these have been downloaded and stored in `/artifact/storage/path/[metric_learning_emb, metric_learning_filter, doublet_gnn, triplet_gnn]`, we alter a config file to point to `/artifact/storage/path`, as well as intermediate data and final seed data in `/data/storage/path/`. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "Seeding_Example" is in [the seed config folder](Seeding/src/configs). We run
+Assuming these have been downloaded and stored in `/artifact/storage/path/[metric_learning_emb, metric_learning_filter, doublet_gnn, triplet_gnn]`, we alter a config file to point to `/artifact/storage/path`, as well as intermediate data and final seed data in `/data/storage/path/`. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "Seeding_Example" is in [the seed configd folder](Seeding/configs). We run
 ```
-python pipeline.py Seeding/config/seed_example.yaml seed
+python pipeline.py Seeding/configs/seed_example.yaml seed
 ```
 
 This will produce a full set of event files in the seed folder (note that seeding is the default, so the `seed` specification is actually unnecessary in this case).
@@ -83,7 +83,7 @@ will re-classify doublet graphs, re-build triplet graphs, and re-classify seeds,
 
 Similar to the seeding case, once model artifacts are available (through download or by running the `train` pipeline), run
 ```
-python pipeline.py Label/config/label_example.yaml label
+python pipeline.py Label/configs/label_example.yaml label
 ```
 to produce sets of labels in `data/storage/path/classify/labels`.
 

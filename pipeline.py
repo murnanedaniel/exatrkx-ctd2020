@@ -13,15 +13,15 @@ from utils.pipeline_utils import parse_args
 sys.path.append('.')
 from MetricLearning.src.preprocess_with_dir import preprocess
 from MetricLearning.src.metric_learning_adjacent import build_graphs as build_doublet_graphs
-from GraphLearning import build_triplets as build_triplet_graphs
-from Seeding import seed
-from Labelling import label
+# from GraphLearning import build_triplets as build_triplet_graphs
+# from Seeding import seed
+# from Labelling import label
 
 # TRAINING PIPELINE IMPORTS
 from MetricLearning.src.metric_learning_adjacent.preprocess import preprocess_stage_1, preprocess_stage_2
 from MetricLearning.src.metric_learning_adjacent.train_embed import train_embed
 from MetricLearning.src.metric_learning_adjacent.train_filter import train_filter
-from GraphLearning import train as train_gnn
+# from GraphLearning import train as train_gnn
 
 
     
@@ -95,6 +95,7 @@ def train(args):
     if args.force is not None:
         force[force_order[args.force]:] = [True]*(len(force_order)-force_order[args.force])
     
+    print(args.nb_train)
     
     # TRAIN PIPELINE
     # ------------------------------

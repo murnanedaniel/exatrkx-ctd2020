@@ -1,0 +1,105 @@
+#_________________
+# Overall pipeline
+
+# stage: seed
+name: Training_Example
+data_storage_path: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging  # Change this name to be more descriptive
+
+#_________________
+# Preprocessing
+
+raw_data_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/train_100_events
+detector_path: /global/cscratch1/sd/danieltm/ExaTrkX/trackml/detectors.csv
+pt_cut: 0
+
+#_________________
+# Embedding + Filtering training
+
+nb_train: 1000000
+nb_valid: 500000
+nb_test: 500000
+nb_layer: 3
+nb_hidden: 512
+emb_dim: 8
+batch_size: 2000
+lr_start: 0.001
+max_nb_epochs: 800
+
+#_________________
+# GNN Training
+
+doublet:
+    resume: False
+    trainer:
+        name: gnn_sparse
+
+    data:
+        name: hitgraphs_sparse
+        n_train: 500
+        n_valid: 100
+        real_weight: 2.5   # 0.5 / 0.2
+        batch_size: 4
+        n_workers: 4
+
+    model:
+        name: resgnn
+        input_dim: 3
+        hidden_dim: 64
+        hidden_activation: Tanh
+        n_graph_iters: 8
+        layer_norm: true
+        loss_func: binary_cross_entropy_with_logits
+
+    optimizer:
+        name: Adam
+        learning_rate: 0.001
+        weight_decay: 0.0001
+
+    training:
+        n_total_epochs: 90
+
+triplet:
+    resume: False
+    trainer:
+        name: gnn_sparse
+
+    data:
+        name: hitgraphs_sparse
+        n_train: 500
+        n_valid: 100
+        real_weight: 1   # 0.5 / 0.2
+        batch_size: 1
+        n_workers: 4
+
+    model:
+        name: resgnn
+        input_dim: 7
+        hidden_dim: 64
+        hidden_activation: Tanh
+        n_graph_iters: 4
+        layer_norm: true
+        loss_func: binary_cross_entropy_with_logits
+
+    optimizer:
+        name: Adam
+        learning_rate: 0.0005
+        weight_decay: 0.0001
+
+    training:
+        n_total_epochs: 90
+
+#_________________
+# Doublet building
+
+doublet_output_dir:
+emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
+filter_threshold: 0.95  # This is the threshold of the metric filter
+num_phi_sections: 8
+embed_feats: False
+augmented: False
+
+#_________________
+# Triplet building
+
+doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
+include_scores: True
