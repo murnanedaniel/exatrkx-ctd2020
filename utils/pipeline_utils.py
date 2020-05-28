@@ -47,7 +47,7 @@ def parse_args():
     add_arg('--include-endcaps', help='Include endcaps', action='store_true') #The logic here is a little counter-intuitive to get the default to be endcaps removed (ditto noise)
     add_arg('--include-noise', help='Include noise', action='store_true')
     
-    add_arg('--pt-cut', help='Transverse momentum, below which tracks are excluded', type=float, default=0)
+    add_arg('--pt-cut', help='Transverse momentum, below which tracks are excluded', type=float)
     add_arg('--task', help='Which GPU number is this script running on', type=int, default=0)
     add_arg('--n_tasks', help='Total number of GPUs available', type=int, default=1)
     

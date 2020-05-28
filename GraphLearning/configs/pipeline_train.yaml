@@ -2,7 +2,7 @@
 # Overall pipeline
 
 # stage: seed
-name: Training_Example
+name: Training_Example_2
 data_storage_path: /data/storage/path/  # Change this name to be more descriptive
 
 #_________________
