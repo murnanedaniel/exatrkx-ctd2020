@@ -146,8 +146,10 @@ def main(args, force=False, gnn=None):
     rank, n_ranks = init_workers(args.distributed)
 
     os.makedirs(config['output_dir'], exist_ok=True)
+    checkpoint_dir = os.path.join(config['output_dir'], 'checkpoints')
     
-    if(len(os.path.join(config['output_dir'], 'checkpoints')) > 0 and not force):
+    if ( os.path.isdir(checkpoint_dir) and 
+        len(os.listdir(checkpoint_dir)) > 0 and not force ):
         print(gnn, "checkpoints already exist. Not forcing training.")
         return
     
