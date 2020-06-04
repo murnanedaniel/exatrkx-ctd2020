@@ -10,7 +10,7 @@ def parse_args():
     # Handle required arguments
     conf_parser = argparse.ArgumentParser('pipeline.py', description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter, add_help=False)
     add_arg = conf_parser.add_argument
-    add_arg('config_file', nargs='?', default='Seeding/src/configs/seed.yaml')
+    add_arg('config_file', nargs='?', default=None)
     args, remaining_args = conf_parser.parse_known_args()
     
     # Set defaults (maybe these themselves could be in a default config file in the utils folder??)
@@ -29,11 +29,22 @@ def parse_args():
                 'resume': False
                 }
     
-    # Handle config file changes to default arguments
-    with open(args.config_file) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-    if config is not None:
-        defaults.update(config)
+    if args.config_file is None:
+        print("No config file provided. Setting default to be: Seeding/src/configs/seed.yaml")
+        try:
+            with open(args.config_file) as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+            defaults.update(config)
+        except:
+            print("But default config file is not present. Create one to get started and include it when running the pipeline.")
+    else:
+        try:
+            with open(args.config_file) as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+            defaults.update(config)
+        except:
+            print("Config file that was provided does not exist.")
+    
     
     # Handle command-line changes to default arguments
     parser = argparse.ArgumentParser()
