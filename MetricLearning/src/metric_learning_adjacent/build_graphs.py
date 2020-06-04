@@ -140,7 +140,8 @@ def predict_pairs(loader, filter_model, batch_size):
             scores.append(preds.cpu())
 
             if (i%(len(loader)//5))==0:
-                print("  {:6d}".format(i*batch_size))
+#                 print("  {:6d}".format(i*batch_size))
+                print("  {:3}% of doublets filtered".format(i//len(loader)*100))
 
     idx_pairs = torch.cat(idx_pairs, dim=0)
     scores = torch.cat(scores)
@@ -252,7 +253,7 @@ def main(args, force=False):
     # Handle case of multiple, single-GPU distribution vs. multiple-nodes-multiple-CPUs
     if DEVICE=='cuda':
         for i, event_name in enumerate(task_event_files): # CONVERT THIS TO A MP POOL!
-            print("\n{} / {}".format(i+1, len(remaining_events)))
+            print("Beginning graph construction \n{} / {}".format(i+1, len(remaining_events)))
             build_one_graph(event_name,
                             load_path,
                             save_path,

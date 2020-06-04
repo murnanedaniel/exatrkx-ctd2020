@@ -179,7 +179,7 @@ def process_event(output_dir, event_name, hits, truth, e, scores, pt_min = 0., n
         np.savez(file_name, X = graph.X, e = graph.e, y = graph.y)
         np.savez(file_name_ID, I = graph.I, pid=graph.pid)
         
-        logging.info('Graph (%s, %i) constructed in %i seconds', event_name, i, time.time() - tic)
+        logging.info('Graph (%s, %i) constructed in %.2f seconds', event_name, i, time.time() - tic)
     
 
 def main():
