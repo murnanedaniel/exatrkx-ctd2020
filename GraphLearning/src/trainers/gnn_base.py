@@ -217,6 +217,7 @@ class GNNBaseTrainer(object):
 #             self.lr_scheduler.step() # Uncomment if running manual schedule
             summary['epoch'] = epoch
             summary['train_time'] = time.time() - start_time
+            self.logger.info('  Training time: %i seconds.' % (summary['train_time']))
 
             # Evaluate on this epoch
             if valid_data_loader is not None:

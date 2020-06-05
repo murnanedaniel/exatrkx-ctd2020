@@ -102,7 +102,7 @@ class SparseGNNTrainer(GNNBaseTrainer):
         else:
             summary['valid_eff'] = true_pos / (true_pos + false_neg)
             summary['valid_pur'] = true_pos / (true_pos + false_pos)
-            self.logger.info('  Validation loss: %.3f acc: %.3f pur: %.3f eff: %.3f' %
+            self.logger.info('  Validation loss: %.3f, acc: %.3f, pur: %.3f, eff: %.3f.' %
                              (summary['valid_loss'],  summary['valid_acc'], summary['valid_pur'], summary['valid_eff']))
         return summary
 

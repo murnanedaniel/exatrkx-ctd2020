@@ -158,7 +158,7 @@ def process_event(output_dir, event_name, hits, truth, e, scores, pt_min = 0., n
     
 
     # Construct the graph
-    logging.info('Event %s, constructing graphs' % event_name)
+    logging.debug('Event %s, constructing graphs' % event_name)
     
     delta = 2
     
@@ -175,11 +175,11 @@ def process_event(output_dir, event_name, hits, truth, e, scores, pt_min = 0., n
         except Exception as e:
             logging.info(e)
 
-        logging.info('Event %s, writing graph %i', event_name, i)
+        logging.debug('Event %s, writing graph %i', event_name, i)
         np.savez(file_name, X = graph.X, e = graph.e, y = graph.y)
         np.savez(file_name_ID, I = graph.I, pid=graph.pid)
         
-        logging.info('Graph (%s, %i) constructed in %.2f seconds', event_name, i, time.time() - tic)
+        logging.debug('Graph (%s, %i) constructed in %.2f seconds', event_name, i, time.time() - tic)
     
 
 def main():

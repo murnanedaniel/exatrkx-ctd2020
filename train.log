@@ -1,0 +1,1441 @@
+2020-06-05 12:24:23,119 WARNING Loading model...
+2020-06-05 12:24:23,202 WARNING Model restored.
+2020-06-05 12:24:27,870 WARNING Working on GPU
+2020-06-05 12:24:27,870 INFO GPU type:
+Tesla V100-SXM2-16GB
+2020-06-05 12:24:27,871 INFO 
+Epoch 1
+2020-06-05 12:24:27,871 INFO Learning rate: 0.001
+2020-06-05 12:24:27,871 INFO Training on 1000000 samples
+2020-06-05 12:24:27,871 INFO          Loss  Score
+--------------------- 
+ Preprocessing... 
+--------------------
+Raw data path exists for experiment Training_Example_4
+--------------------- 
+ Training embedding... 
+--------------------
+Saving to: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/Training_Example_4/metric_learning_emb/best_model.pkl
+Sampling hit pairs for training dataset. 
+WARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ
+file    0,    36652. Elapsed:  0.0m, Remain:  2.1m
+file    2,   109044. Elapsed:  0.1m, Remain:  2.0m
+file    4,   179840. Elapsed:  0.2m, Remain:  1.9m
+file    6,   251076. Elapsed:  0.3m, Remain:  1.8m
+file    8,   322148. Elapsed:  0.3m, Remain:  1.8m
+file   10,   393736. Elapsed:  0.4m, Remain:  1.7m
+file   12,   463864. Elapsed:  0.5m, Remain:  1.6m
+file   14,   533416. Elapsed:  0.6m, Remain:  1.6m
+file   16,   604964. Elapsed:  0.7m, Remain:  1.5m
+file   18,   673232. Elapsed:  0.7m, Remain:  1.4m
+file   20,   746092. Elapsed:  0.8m, Remain:  1.4m
+file   22,   816180. Elapsed:  0.9m, Remain:  1.3m
+file   24,   889492. Elapsed:  1.0m, Remain:  1.2m
+file   26,   959140. Elapsed:  1.0m, Remain:  1.1m
+file   28,  1028192. Elapsed:  1.1m, Remain:  1.0m
+file   30,  1098776. Elapsed:  1.2m, Remain:  1.0m
+file   32,  1166908. Elapsed:  1.3m, Remain:  0.9m
+file   34,  1235092. Elapsed:  1.3m, Remain:  0.8m
+file   36,  1306400. Elapsed:  1.4m, Remain:  0.7m
+file   38,  1374580. Elapsed:  1.5m, Remain:  0.7m
+file   40,  1445272. Elapsed:  1.6m, Remain:  0.6m
+file   42,  1515724. Elapsed:  1.6m, Remain:  0.5m
+file   44,  1587704. Elapsed:  1.7m, Remain:  0.4m
+file   46,  1658532. Elapsed:  1.8m, Remain:  0.4m
+file   48,  1729508. Elapsed:  1.8m, Remain:  0.3m
+file   50,  1798804. Elapsed:  1.9m, Remain:  0.2m
+file   52,  1869176. Elapsed:  2.0m, Remain:  0.1m
+file   54,  1941524. Elapsed:  2.1m, Remain:  0.1m
+file   56,  2014080. Elapsed:  2.2m, Remain: -0.0m
+2000000 1000000 500000 500000
+2020-06-05 12:24:28,835 INFO    2000: 0.031  99.15
+2020-06-05 12:24:29,758 INFO   102000: 0.044  98.64
+2020-06-05 12:24:30,724 INFO   202000: 0.038  98.86
+2020-06-05 12:24:31,739 INFO   302000: 0.036  98.93
+2020-06-05 12:24:32,711 INFO   402000: 0.035  98.98
+2020-06-05 12:24:33,683 INFO   502000: 0.034  99.02
+2020-06-05 12:24:34,591 INFO   602000: 0.033  99.03
+2020-06-05 12:24:35,728 INFO   702000: 0.033  99.05
+2020-06-05 12:24:36,843 INFO   802000: 0.033  99.06
+2020-06-05 12:24:37,860 INFO   902000: 0.032  99.08
+2020-06-05 12:24:38,801 INFO Model elapsed:  7.92
+2020-06-05 12:24:38,801 INFO Loader elapsed: 3.01
+2020-06-05 12:24:38,801 INFO Total elapsed:  10.93
+2020-06-05 12:24:38,801 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:24:38,801 INFO          Loss  Score
+2020-06-05 12:24:40,384 INFO   124000: 0.030  99.12
+2020-06-05 12:24:41,403 INFO   248000: 0.030  99.13
+2020-06-05 12:24:42,598 INFO   372000: 0.030  99.13
+2020-06-05 12:24:43,536 INFO   496000: 0.030  99.13
+2020-06-05 12:24:43,746 INFO Train accuracy: 99.09
+2020-06-05 12:24:43,746 INFO Valid accuracy: 99.13
+2020-06-05 12:24:43,755 WARNING Best performance on valid set.
+2020-06-05 12:24:43,770 WARNING Best model saved.
+2020-06-05 12:24:43,784 WARNING Current model saved.
+2020-06-05 12:24:43,784 INFO Epoch took 15 seconds.
+2020-06-05 12:24:43,784 INFO 
+Epoch 2
+2020-06-05 12:24:43,784 INFO Learning rate: 0.001
+2020-06-05 12:24:43,784 INFO Training on 1000000 samples
+2020-06-05 12:24:43,784 INFO          Loss  Score
+2020-06-05 12:24:44,336 INFO    2000: 0.031  98.95
+2020-06-05 12:24:45,391 INFO   102000: 0.031  99.16
+2020-06-05 12:24:46,346 INFO   202000: 0.031  99.18
+2020-06-05 12:24:47,368 INFO   302000: 0.030  99.17
+2020-06-05 12:24:48,369 INFO   402000: 0.030  99.17
+2020-06-05 12:24:49,355 INFO   502000: 0.030  99.16
+2020-06-05 12:24:50,313 INFO   602000: 0.030  99.16
+2020-06-05 12:24:51,329 INFO   702000: 0.030  99.17
+2020-06-05 12:24:52,301 INFO   802000: 0.030  99.17
+2020-06-05 12:24:53,296 INFO   902000: 0.030  99.17
+2020-06-05 12:24:54,217 INFO Model elapsed:  7.43
+2020-06-05 12:24:54,218 INFO Loader elapsed: 3.00
+2020-06-05 12:24:54,218 INFO Total elapsed:  10.43
+2020-06-05 12:24:54,218 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:24:54,218 INFO          Loss  Score
+2020-06-05 12:24:55,793 INFO   124000: 0.030  99.17
+2020-06-05 12:24:57,002 INFO   248000: 0.030  99.16
+2020-06-05 12:24:58,053 INFO   372000: 0.030  99.17
+2020-06-05 12:24:58,988 INFO   496000: 0.030  99.17
+2020-06-05 12:24:59,178 INFO Train accuracy: 99.17
+2020-06-05 12:24:59,178 INFO Valid accuracy: 99.16
+2020-06-05 12:24:59,179 WARNING Best performance on valid set.
+2020-06-05 12:24:59,194 WARNING Best model saved.
+2020-06-05 12:24:59,208 WARNING Current model saved.
+2020-06-05 12:24:59,208 INFO Epoch took 15 seconds.
+2020-06-05 12:24:59,208 INFO 
+Epoch 3
+2020-06-05 12:24:59,208 INFO Learning rate: 0.001
+2020-06-05 12:24:59,208 INFO Training on 1000000 samples
+2020-06-05 12:24:59,208 INFO          Loss  Score
+2020-06-05 12:24:59,800 INFO    2000: 0.027  99.30
+2020-06-05 12:25:00,895 INFO   102000: 0.030  99.17
+2020-06-05 12:25:01,855 INFO   202000: 0.030  99.16
+2020-06-05 12:25:02,867 INFO   302000: 0.030  99.16
+2020-06-05 12:25:03,798 INFO   402000: 0.030  99.15
+2020-06-05 12:25:04,774 INFO   502000: 0.030  99.16
+2020-06-05 12:25:05,844 INFO   602000: 0.030  99.17
+2020-06-05 12:25:06,978 INFO   702000: 0.030  99.17
+2020-06-05 12:25:08,038 INFO   802000: 0.030  99.17
+2020-06-05 12:25:09,014 INFO   902000: 0.030  99.18
+2020-06-05 12:25:09,974 INFO Model elapsed:  7.51
+2020-06-05 12:25:09,974 INFO Loader elapsed: 3.26
+2020-06-05 12:25:09,974 INFO Total elapsed:  10.77
+2020-06-05 12:25:09,975 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:25:09,975 INFO          Loss  Score
+2020-06-05 12:25:11,640 INFO   124000: 0.030  99.15
+2020-06-05 12:25:12,744 INFO   248000: 0.030  99.16
+2020-06-05 12:25:13,827 INFO   372000: 0.030  99.16
+2020-06-05 12:25:14,789 INFO   496000: 0.030  99.16
+2020-06-05 12:25:14,991 INFO Train accuracy: 99.18
+2020-06-05 12:25:14,991 INFO Valid accuracy: 99.16
+2020-06-05 12:25:14,992 WARNING Best performance on valid set.
+2020-06-05 12:25:15,007 WARNING Best model saved.
+2020-06-05 12:25:15,020 WARNING Current model saved.
+2020-06-05 12:25:15,020 INFO Epoch took 15 seconds.
+2020-06-05 12:25:15,020 INFO 
+Epoch 4
+2020-06-05 12:25:15,020 INFO Learning rate: 0.001
+2020-06-05 12:25:15,020 INFO Training on 1000000 samples
+2020-06-05 12:25:15,020 INFO          Loss  Score
+2020-06-05 12:25:15,549 INFO    2000: 0.027  99.45
+2020-06-05 12:25:16,697 INFO   102000: 0.029  99.17
+2020-06-05 12:25:17,646 INFO   202000: 0.029  99.17
+2020-06-05 12:25:18,666 INFO   302000: 0.029  99.17
+2020-06-05 12:25:19,593 INFO   402000: 0.029  99.18
+2020-06-05 12:25:20,616 INFO   502000: 0.029  99.18
+2020-06-05 12:25:21,585 INFO   602000: 0.029  99.18
+2020-06-05 12:25:22,593 INFO   702000: 0.029  99.18
+2020-06-05 12:25:23,617 INFO   802000: 0.029  99.18
+2020-06-05 12:25:24,636 INFO   902000: 0.029  99.18
+2020-06-05 12:25:25,560 INFO Model elapsed:  7.65
+2020-06-05 12:25:25,560 INFO Loader elapsed: 2.89
+2020-06-05 12:25:25,560 INFO Total elapsed:  10.54
+2020-06-05 12:25:25,560 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:25:25,560 INFO          Loss  Score
+2020-06-05 12:25:27,227 INFO   124000: 0.029  99.15
+2020-06-05 12:25:28,566 INFO   248000: 0.030  99.15
+2020-06-05 12:25:29,722 INFO   372000: 0.030  99.15
+2020-06-05 12:25:30,812 INFO   496000: 0.029  99.15
+2020-06-05 12:25:31,014 INFO Train accuracy: 99.18
+2020-06-05 12:25:31,014 INFO Valid accuracy: 99.15
+2020-06-05 12:25:31,016 WARNING Best performance on valid set.
+2020-06-05 12:25:31,038 WARNING Best model saved.
+2020-06-05 12:25:31,052 WARNING Current model saved.
+2020-06-05 12:25:31,052 INFO Epoch took 16 seconds.
+2020-06-05 12:25:31,052 INFO 
+Epoch 5
+2020-06-05 12:25:31,052 INFO Learning rate: 0.001
+2020-06-05 12:25:31,052 INFO Training on 1000000 samples
+2020-06-05 12:25:31,052 INFO          Loss  Score
+2020-06-05 12:25:31,581 INFO    2000: 0.028  99.15
+2020-06-05 12:25:32,701 INFO   102000: 0.030  99.15
+2020-06-05 12:25:33,727 INFO   202000: 0.030  99.18
+2020-06-05 12:25:34,683 INFO   302000: 0.029  99.19
+2020-06-05 12:25:35,785 INFO   402000: 0.029  99.19
+2020-06-05 12:25:36,855 INFO   502000: 0.029  99.19
+2020-06-05 12:25:37,990 INFO   602000: 0.029  99.19
+2020-06-05 12:25:38,972 INFO   702000: 0.029  99.19
+2020-06-05 12:25:39,924 INFO   802000: 0.029  99.19
+2020-06-05 12:25:40,934 INFO   902000: 0.029  99.19
+2020-06-05 12:25:41,837 INFO Model elapsed:  7.76
+2020-06-05 12:25:41,838 INFO Loader elapsed: 3.02
+2020-06-05 12:25:41,838 INFO Total elapsed:  10.79
+2020-06-05 12:25:41,838 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:25:41,838 INFO          Loss  Score
+2020-06-05 12:25:43,487 INFO   124000: 0.029  99.18
+2020-06-05 12:25:44,588 INFO   248000: 0.030  99.18
+2020-06-05 12:25:45,588 INFO   372000: 0.030  99.19
+2020-06-05 12:25:46,625 INFO   496000: 0.029  99.19
+2020-06-05 12:25:46,832 INFO Train accuracy: 99.19
+2020-06-05 12:25:46,832 INFO Valid accuracy: 99.19
+2020-06-05 12:25:46,833 WARNING Best performance on valid set.
+2020-06-05 12:25:46,848 WARNING Best model saved.
+2020-06-05 12:25:46,861 WARNING Current model saved.
+2020-06-05 12:25:46,861 INFO Epoch took 15 seconds.
+2020-06-05 12:25:46,861 WARNING Training completed.
+2020-06-05 12:25:46,874 WARNING 
+Best model loaded for evaluation on test set.
+2020-06-05 12:25:46,874 INFO 
+Evaluating 500000 Test samples.
+2020-06-05 12:25:46,874 INFO          Loss  Score
+2020-06-05 12:25:48,504 INFO   124000: 0.029  99.22
+2020-06-05 12:25:49,645 INFO   248000: 0.029  99.19
+2020-06-05 12:25:50,707 INFO   372000: 0.029  99.20
+2020-06-05 12:25:51,661 INFO   496000: 0.029  99.20
+2020-06-05 12:25:52,526 INFO Test score:  99.20
+2020-06-05 12:28:41,191 INFO Input dimension: 24
+2020-06-05 12:28:41,192 WARNING Loading model...
+2020-06-05 12:28:41,235 WARNING Model restored.
+2020-06-05 12:28:41,237 WARNING Working on GPU
+2020-06-05 12:28:41,237 INFO GPU type:
+Tesla V100-SXM2-16GB
+2020-06-05 12:28:41,237 INFO 
+Epoch 1
+2020-06-05 12:28:41,237 INFO Learning rate: 0.001
+2020-06-05 12:28:41,237 INFO Training on 1000000 samples
+2020-06-05 12:28:41,237 INFO          Loss  Score
+--------------------- 
+ Training filter... 
+--------------------
+Sampling hit pairs for training dataset. 
+WARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ
+file    0,    36944. Elapsed:  0.0m, Remain:  2.4m
+file    2,   106048. Elapsed:  0.1m, Remain:  2.3m
+file    4,   176188. Elapsed:  0.2m, Remain:  2.6m
+file    6,   242480. Elapsed:  0.3m, Remain:  2.4m
+file    8,   311744. Elapsed:  0.4m, Remain:  2.3m
+file   10,   380560. Elapsed:  0.5m, Remain:  2.1m
+file   12,   451888. Elapsed:  0.6m, Remain:  2.0m
+file   14,   521216. Elapsed:  0.7m, Remain:  1.9m
+file   16,   591704. Elapsed:  0.8m, Remain:  1.9m
+file   18,   660480. Elapsed:  0.9m, Remain:  1.8m
+file   20,   731512. Elapsed:  1.0m, Remain:  1.7m
+file   22,   801588. Elapsed:  1.1m, Remain:  1.6m
+file   24,   871396. Elapsed:  1.2m, Remain:  1.5m
+file   26,   939580. Elapsed:  1.3m, Remain:  1.4m
+file   28,  1013656. Elapsed:  1.3m, Remain:  1.3m
+file   30,  1085316. Elapsed:  1.4m, Remain:  1.2m
+file   32,  1156112. Elapsed:  1.5m, Remain:  1.1m
+file   34,  1226164. Elapsed:  1.6m, Remain:  1.0m
+file   36,  1295584. Elapsed:  1.7m, Remain:  0.9m
+file   38,  1366744. Elapsed:  1.8m, Remain:  0.8m
+file   40,  1436332. Elapsed:  1.9m, Remain:  0.7m
+file   42,  1510596. Elapsed:  2.0m, Remain:  0.6m
+file   44,  1578096. Elapsed:  2.1m, Remain:  0.6m
+file   46,  1648004. Elapsed:  2.2m, Remain:  0.5m
+file   48,  1717620. Elapsed:  2.2m, Remain:  0.4m
+file   50,  1789180. Elapsed:  2.3m, Remain:  0.3m
+file   52,  1860344. Elapsed:  2.4m, Remain:  0.2m
+file   54,  1932884. Elapsed:  2.5m, Remain:  0.1m
+file   56,  2003992. Elapsed:  2.6m, Remain: -0.0m
+2020-06-05 12:28:50,853 INFO Model elapsed:  7.55
+2020-06-05 12:28:50,853 INFO Loader elapsed: 2.07
+2020-06-05 12:28:50,854 INFO Total elapsed:  9.62
+2020-06-05 12:28:50,854 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:28:50,854 INFO          Loss  Score
+      2000:  Loss   0.044  Acc 98.95  AUC 0.996
+    102000:  Loss   0.065  Acc 98.01  AUC 0.996
+    202000:  Loss   0.052  Acc 98.45  AUC 0.997
+    302000:  Loss   0.047  Acc 98.63  AUC 0.997
+    402000:  Loss   0.044  Acc 98.74  AUC 0.997
+    502000:  Loss   0.043  Acc 98.80  AUC 0.997
+    602000:  Loss   0.041  Acc 98.84  AUC 0.997
+    702000:  Loss   0.041  Acc 98.88  AUC 0.997
+    802000:  Loss   0.040  Acc 98.91  AUC 0.997
+    902000:  Loss   0.039  Acc 98.93  AUC 0.997
+2020-06-05 12:28:55,796 INFO Train accuracy: 98.95
+2020-06-05 12:28:55,796 INFO Valid accuracy: 99.08
+2020-06-05 12:28:56,216 WARNING Best performance on valid set.
+2020-06-05 12:28:56,232 WARNING Best model saved.
+2020-06-05 12:28:56,247 WARNING Current model saved.
+2020-06-05 12:28:56,248 INFO Epoch took 15 seconds.
+2020-06-05 12:28:56,248 INFO 
+Epoch 2
+2020-06-05 12:28:56,248 INFO Learning rate: 0.001
+2020-06-05 12:28:56,248 INFO Training on 1000000 samples
+2020-06-05 12:28:56,248 INFO          Loss  Score
+    124000:  Loss   0.034  Acc 99.09  AUC 0.998
+    248000:  Loss   0.033  Acc 99.10  AUC 0.998
+    372000:  Loss   0.033  Acc 99.09  AUC 0.998
+    496000:  Loss   0.033  Acc 99.08  AUC 0.998
+2020-06-05 12:29:06,111 INFO Model elapsed:  7.86
+2020-06-05 12:29:06,111 INFO Loader elapsed: 2.00
+2020-06-05 12:29:06,111 INFO Total elapsed:  9.86
+2020-06-05 12:29:06,111 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:29:06,111 INFO          Loss  Score
+      2000:  Loss   0.027  Acc 99.20  AUC 0.999
+    102000:  Loss   0.032  Acc 99.14  AUC 0.998
+    202000:  Loss   0.032  Acc 99.14  AUC 0.998
+    302000:  Loss   0.032  Acc 99.14  AUC 0.998
+    402000:  Loss   0.032  Acc 99.15  AUC 0.998
+    502000:  Loss   0.032  Acc 99.15  AUC 0.998
+    602000:  Loss   0.032  Acc 99.15  AUC 0.998
+    702000:  Loss   0.032  Acc 99.14  AUC 0.998
+    802000:  Loss   0.032  Acc 99.14  AUC 0.998
+    902000:  Loss   0.032  Acc 99.14  AUC 0.998
+2020-06-05 12:29:11,146 INFO Train accuracy: 99.14
+2020-06-05 12:29:11,146 INFO Valid accuracy: 99.13
+2020-06-05 12:29:11,147 WARNING Best performance on valid set.
+2020-06-05 12:29:11,162 WARNING Best model saved.
+2020-06-05 12:29:11,176 WARNING Current model saved.
+2020-06-05 12:29:11,176 INFO Epoch took 14 seconds.
+2020-06-05 12:29:11,176 INFO 
+Epoch 3
+2020-06-05 12:29:11,176 INFO Learning rate: 0.001
+2020-06-05 12:29:11,176 INFO Training on 1000000 samples
+2020-06-05 12:29:11,176 INFO          Loss  Score
+    124000:  Loss   0.032  Acc 99.14  AUC 0.998
+    248000:  Loss   0.031  Acc 99.15  AUC 0.998
+    372000:  Loss   0.031  Acc 99.14  AUC 0.998
+    496000:  Loss   0.032  Acc 99.13  AUC 0.998
+2020-06-05 12:29:20,806 INFO Model elapsed:  7.71
+2020-06-05 12:29:20,806 INFO Loader elapsed: 1.92
+2020-06-05 12:29:20,806 INFO Total elapsed:  9.63
+2020-06-05 12:29:20,806 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:29:20,806 INFO          Loss  Score
+      2000:  Loss   0.039  Acc 99.15  AUC 0.997
+    102000:  Loss   0.032  Acc 99.12  AUC 0.998
+    202000:  Loss   0.031  Acc 99.16  AUC 0.998
+    302000:  Loss   0.031  Acc 99.17  AUC 0.998
+    402000:  Loss   0.031  Acc 99.17  AUC 0.998
+    502000:  Loss   0.031  Acc 99.17  AUC 0.998
+    602000:  Loss   0.031  Acc 99.17  AUC 0.998
+    702000:  Loss   0.031  Acc 99.18  AUC 0.998
+    802000:  Loss   0.031  Acc 99.18  AUC 0.998
+    902000:  Loss   0.031  Acc 99.18  AUC 0.998
+2020-06-05 12:29:25,798 INFO Train accuracy: 99.18
+2020-06-05 12:29:25,798 INFO Valid accuracy: 99.13
+2020-06-05 12:29:25,814 WARNING Current model saved.
+2020-06-05 12:29:25,814 INFO Epoch took 14 seconds.
+2020-06-05 12:29:25,814 INFO 
+Epoch 4
+2020-06-05 12:29:25,814 INFO Learning rate: 0.001
+2020-06-05 12:29:25,815 INFO Training on 1000000 samples
+2020-06-05 12:29:25,815 INFO          Loss  Score
+    124000:  Loss   0.032  Acc 99.12  AUC 0.998
+    248000:  Loss   0.031  Acc 99.14  AUC 0.998
+    372000:  Loss   0.032  Acc 99.13  AUC 0.998
+    496000:  Loss   0.032  Acc 99.12  AUC 0.998
+2020-06-05 12:29:35,498 INFO Model elapsed:  7.67
+2020-06-05 12:29:35,498 INFO Loader elapsed: 2.01
+2020-06-05 12:29:35,498 INFO Total elapsed:  9.68
+2020-06-05 12:29:35,498 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:29:35,498 INFO          Loss  Score
+      2000:  Loss   0.036  Acc 99.05  AUC 0.997
+    102000:  Loss   0.030  Acc 99.20  AUC 0.998
+    202000:  Loss   0.030  Acc 99.18  AUC 0.998
+    302000:  Loss   0.030  Acc 99.18  AUC 0.998
+    402000:  Loss   0.030  Acc 99.18  AUC 0.998
+    502000:  Loss   0.030  Acc 99.18  AUC 0.998
+    602000:  Loss   0.030  Acc 99.19  AUC 0.998
+    702000:  Loss   0.030  Acc 99.20  AUC 0.998
+    802000:  Loss   0.030  Acc 99.20  AUC 0.998
+    902000:  Loss   0.030  Acc 99.20  AUC 0.998
+2020-06-05 12:29:40,520 INFO Train accuracy: 99.20
+2020-06-05 12:29:40,520 INFO Valid accuracy: 99.18
+2020-06-05 12:29:40,521 WARNING Best performance on valid set.
+2020-06-05 12:29:40,536 WARNING Best model saved.
+2020-06-05 12:29:40,550 WARNING Current model saved.
+2020-06-05 12:29:40,550 INFO Epoch took 14 seconds.
+2020-06-05 12:29:40,550 INFO 
+Epoch 5
+2020-06-05 12:29:40,550 INFO Learning rate: 0.001
+2020-06-05 12:29:40,550 INFO Training on 1000000 samples
+2020-06-05 12:29:40,550 INFO          Loss  Score
+    124000:  Loss   0.030  Acc 99.18  AUC 0.998
+    248000:  Loss   0.029  Acc 99.20  AUC 0.998
+    372000:  Loss   0.030  Acc 99.18  AUC 0.998
+    496000:  Loss   0.030  Acc 99.18  AUC 0.998
+2020-06-05 12:29:50,200 INFO Model elapsed:  7.51
+2020-06-05 12:29:50,200 INFO Loader elapsed: 2.14
+2020-06-05 12:29:50,200 INFO Total elapsed:  9.65
+2020-06-05 12:29:50,200 INFO 
+Evaluating 500000 Valid samples.
+2020-06-05 12:29:50,200 INFO          Loss  Score
+      2000:  Loss   0.034  Acc 99.15  AUC 0.998
+    102000:  Loss   0.030  Acc 99.19  AUC 0.998
+    202000:  Loss   0.029  Acc 99.21  AUC 0.998
+    302000:  Loss   0.029  Acc 99.21  AUC 0.998
+    402000:  Loss   0.029  Acc 99.21  AUC 0.998
+    502000:  Loss   0.029  Acc 99.22  AUC 0.998
+    602000:  Loss   0.028  Acc 99.23  AUC 0.998
+    702000:  Loss   0.028  Acc 99.23  AUC 0.998
+    802000:  Loss   0.028  Acc 99.23  AUC 0.998
+    902000:  Loss   0.028  Acc 99.23  AUC 0.998
+2020-06-05 12:29:55,164 INFO Train accuracy: 99.23
+2020-06-05 12:29:55,164 INFO Valid accuracy: 99.14
+2020-06-05 12:29:55,181 WARNING Current model saved.
+2020-06-05 12:29:55,181 INFO Epoch took 14 seconds.
+2020-06-05 12:29:55,181 WARNING Training completed.
+2020-06-05 12:29:55,193 WARNING 
+Best model loaded for evaluation on test set.
+2020-06-05 12:29:55,193 INFO 
+Evaluating 500000 test samples.
+2020-06-05 12:29:55,194 INFO          Loss  Score
+    124000:  Loss   0.032  Acc 99.12  AUC 0.998
+    248000:  Loss   0.031  Acc 99.16  AUC 0.998
+    372000:  Loss   0.032  Acc 99.14  AUC 0.998
+    496000:  Loss   0.032  Acc 99.14  AUC 0.998
+2020-06-05 12:30:00,205 INFO Test score:  99.21
+    124000:  Loss   0.029  Acc 99.21  AUC 0.998
+    248000:  Loss   0.030  Acc 99.19  AUC 0.998
+    372000:  Loss   0.030  Acc 99.20  AUC 0.998
+    496000:  Loss   0.029  Acc 99.21  AUC 0.998
+--------------------- 
+ Training doublets... 
+--------------------
+Beginning graph construction 1 / 100
+Constructing neighborhood of: event000001024.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 2 / 100
+Constructing neighborhood of: event000001081.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 3 / 100
+Constructing neighborhood of: event000001010.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.6 avg s / sample
+Beginning graph construction 4 / 100
+Constructing neighborhood of: event000001099.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  4.3 avg s / sample
+Beginning graph construction 5 / 100
+Constructing neighborhood of: event000001067.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 6 / 100
+Constructing neighborhood of: event000001031.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 7 / 100
+Constructing neighborhood of: event000001001.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   78% of doublets filtered
+   98% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 8 / 100
+Constructing neighborhood of: event000001026.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 9 / 100
+Constructing neighborhood of: event000001047.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 10 / 100
+Constructing neighborhood of: event000001051.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 11 / 100
+Constructing neighborhood of: event000001022.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 12 / 100
+Constructing neighborhood of: event000001070.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 13 / 100
+Constructing neighborhood of: event000001079.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 14 / 100
+Constructing neighborhood of: event000001080.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 15 / 100
+Constructing neighborhood of: event000001056.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 16 / 100
+Constructing neighborhood of: event000001041.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 17 / 100
+Constructing neighborhood of: event000001012.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 18 / 100
+Constructing neighborhood of: event000001048.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 19 / 100
+Constructing neighborhood of: event000001014.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 20 / 100
+Constructing neighborhood of: event000001040.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 21 / 100
+Constructing neighborhood of: event000001059.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 22 / 100
+Constructing neighborhood of: event000001009.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 23 / 100
+Constructing neighborhood of: event000001097.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 24 / 100
+Constructing neighborhood of: event000001077.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 25 / 100
+Constructing neighborhood of: event000001084.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 26 / 100
+Constructing neighborhood of: event000001002.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 27 / 100
+Constructing neighborhood of: event000001017.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 28 / 100
+Constructing neighborhood of: event000001055.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 29 / 100
+Constructing neighborhood of: event000001076.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 30 / 100
+Constructing neighborhood of: event000001037.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 31 / 100
+Constructing neighborhood of: event000001063.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 32 / 100
+Constructing neighborhood of: event000001013.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 33 / 100
+Constructing neighborhood of: event000001023.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 34 / 100
+Constructing neighborhood of: event000001032.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 35 / 100
+Constructing neighborhood of: event000001042.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 36 / 100
+Constructing neighborhood of: event000001006.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 37 / 100
+Constructing neighborhood of: event000001030.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 38 / 100
+Constructing neighborhood of: event000001058.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 39 / 100
+Constructing neighborhood of: event000001025.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 40 / 100
+Constructing neighborhood of: event000001053.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 41 / 100
+Constructing neighborhood of: event000001007.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 42 / 100
+Constructing neighborhood of: event000001082.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 43 / 100
+Constructing neighborhood of: event000001092.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 44 / 100
+Constructing neighborhood of: event000001004.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 45 / 100
+Constructing neighborhood of: event000001029.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 46 / 100
+Constructing neighborhood of: event000001096.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 47 / 100
+Constructing neighborhood of: event000001093.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 48 / 100
+Constructing neighborhood of: event000001069.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 49 / 100
+Constructing neighborhood of: event000001000.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 50 / 100
+Constructing neighborhood of: event000001043.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 51 / 100
+Constructing neighborhood of: event000001046.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 52 / 100
+Constructing neighborhood of: event000001083.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 53 / 100
+Constructing neighborhood of: event000001064.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 54 / 100
+Constructing neighborhood of: event000001021.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 55 / 100
+Constructing neighborhood of: event000001078.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  4.0 avg s / sample
+Beginning graph construction 56 / 100
+Constructing neighborhood of: event000001098.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 57 / 100
+Constructing neighborhood of: event000001090.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 58 / 100
+Constructing neighborhood of: event000001071.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 59 / 100
+Constructing neighborhood of: event000001095.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 60 / 100
+Constructing neighborhood of: event000001094.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 61 / 100
+Constructing neighborhood of: event000001035.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 62 / 100
+Constructing neighborhood of: event000001065.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 63 / 100
+Constructing neighborhood of: event000001008.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 64 / 100
+Constructing neighborhood of: event000001028.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 65 / 100
+Constructing neighborhood of: event000001044.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 66 / 100
+Constructing neighborhood of: event000001060.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 67 / 100
+Constructing neighborhood of: event000001062.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 68 / 100
+Constructing neighborhood of: event000001089.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 69 / 100
+Constructing neighborhood of: event000001057.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 70 / 100
+Constructing neighborhood of: event000001087.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 71 / 100
+Constructing neighborhood of: event000001003.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 72 / 100
+Constructing neighborhood of: event000001072.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 73 / 100
+Constructing neighborhood of: event000001039.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 74 / 100
+Constructing neighborhood of: event000001005.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 75 / 100
+Constructing neighborhood of: event000001088.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 76 / 100
+Constructing neighborhood of: event000001034.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 77 / 100
+Constructing neighborhood of: event000001085.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 78 / 100
+Constructing neighborhood of: event000001066.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 79 / 100
+Constructing neighborhood of: event000001036.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 80 / 100
+Constructing neighborhood of: event000001091.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 81 / 100
+Constructing neighborhood of: event000001015.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 82 / 100
+Constructing neighborhood of: event000001016.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 83 / 100
+Constructing neighborhood of: event000001019.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 84 / 100
+Constructing neighborhood of: event000001020.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 85 / 100
+Constructing neighborhood of: event000001075.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 86 / 100
+Constructing neighborhood of: event000001052.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 87 / 100
+Constructing neighborhood of: event000001038.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 88 / 100
+Constructing neighborhood of: event000001050.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 89 / 100
+Constructing neighborhood of: event000001068.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 90 / 100
+Constructing neighborhood of: event000001045.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 91 / 100
+Constructing neighborhood of: event000001027.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 92 / 100
+Constructing neighborhood of: event000001011.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 93 / 100
+Constructing neighborhood of: event000001086.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 94 / 100
+Constructing neighborhood of: event000001018.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   39% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   98% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 95 / 100
+Constructing neighborhood of: event000001073.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 96 / 100
+Constructing neighborhood of: event000001033.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 97 / 100
+Constructing neighborhood of: event000001061.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  100% of doublets filtered
+  3.8 avg s / sample
+Beginning graph construction 98 / 100
+Constructing neighborhood of: event000001074.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 99 / 100
+Constructing neighborhood of: event000001054.pickle
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   60% of doublets filtered
+   80% of doublets filtered
+  3.9 avg s / sample
+Beginning graph construction 100 / 100
+Constructing neighborhood of: event000001049.pickle
+2020-06-05 12:36:25,144 INFO Initialized rank 0 out of 1
+2020-06-05 12:36:25,144 INFO Configuration: {'resume': False, 'trainer': {'name': 'gnn_sparse'}, 'data': {'name': 'hitgraphs_sparse', 'n_train': 500, 'n_valid': 100, 'real_weight': 2.5, 'batch_size': 4, 'n_workers': 4, 'input_dir': '/global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/doublet_graphs'}, 'model': {'name': 'resgnn', 'input_dim': 3, 'hidden_dim': 64, 'hidden_activation': 'Tanh', 'n_graph_iters': 8, 'layer_norm': True, 'loss_func': 'binary_cross_entropy_with_logits'}, 'optimizer': {'name': 'Adam', 'learning_rate': 0.001, 'weight_decay': 0.0001}, 'training': {'n_total_epochs': 5}, 'output_dir': '/global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/doublet_gnn'}
+2020-06-05 12:36:25,145 INFO Saving job outputs to /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/doublet_gnn
+2020-06-05 12:36:25,145 INFO Writing config via pickle to /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/doublet_gnn/config.pkl
+2020-06-05 12:36:25,151 INFO Loaded 500 training samples
+2020-06-05 12:36:25,151 INFO Loaded 100 validation samples
+2020-06-05 12:36:25,207 INFO Model: 
+GNNSegmentClassifier(
+  (input_network): Sequential(
+    (0): Linear(in_features=3, out_features=64, bias=True)
+    (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+    (2): Tanh()
+  )
+  (edge_network): EdgeNetwork(
+    (network): Sequential(
+      (0): Linear(in_features=128, out_features=64, bias=True)
+      (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (2): Tanh()
+      (3): Linear(in_features=64, out_features=64, bias=True)
+      (4): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (5): Tanh()
+      (6): Linear(in_features=64, out_features=64, bias=True)
+      (7): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (8): Tanh()
+      (9): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (node_network): NodeNetwork(
+    (network): Sequential(
+      (0): Linear(in_features=192, out_features=64, bias=True)
+      (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (2): Tanh()
+      (3): Linear(in_features=64, out_features=64, bias=True)
+      (4): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (5): Tanh()
+      (6): Linear(in_features=64, out_features=64, bias=True)
+      (7): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (8): Tanh()
+      (9): Linear(in_features=64, out_features=64, bias=True)
+      (10): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (11): Tanh()
+    )
+  )
+)
+Parameters: 42753
+2020-06-05 12:36:25,207 INFO Epoch 0
+    0% of doublets filtered
+   20% of doublets filtered
+   40% of doublets filtered
+   59% of doublets filtered
+   79% of doublets filtered
+   99% of doublets filtered
+  3.8 avg s / sample
+Total time: 384.9017159938812
+2020-06-05 12:39:00,905 INFO   Training loss: 0.861
+2020-06-05 12:39:00,906 INFO   Training time: 155 seconds.
+2020-06-05 12:39:15,073 INFO   Validation loss: 0.571, acc: 0.700, pur: 0.486, eff: 0.654.
+2020-06-05 12:39:15,097 INFO Epoch 1
+2020-06-05 12:41:49,508 INFO   Training loss: 0.798
+2020-06-05 12:41:49,510 INFO   Training time: 154 seconds.
+2020-06-05 12:42:03,077 INFO   Validation loss: 0.527, acc: 0.716, pur: 0.507, eff: 0.701.
+2020-06-05 12:42:04,928 INFO Epoch 2
+2020-06-05 12:44:39,910 INFO   Training loss: 0.727
+2020-06-05 12:44:39,911 INFO   Training time: 154 seconds.
+2020-06-05 12:44:55,807 INFO   Validation loss: 0.438, acc: 0.775, pur: 0.578, eff: 0.829.
+2020-06-05 12:44:56,142 INFO Epoch 3
+2020-06-05 12:47:39,286 INFO   Training loss: 0.642
+2020-06-05 12:47:39,291 INFO   Training time: 163 seconds.
+2020-06-05 12:47:54,687 INFO   Validation loss: 0.365, acc: 0.816, pur: 0.636, eff: 0.853.
+2020-06-05 12:47:54,895 INFO Epoch 4
+2020-06-05 12:50:46,601 INFO   Training loss: 0.518
+2020-06-05 12:50:46,609 INFO   Training time: 171 seconds.
+2020-06-05 12:51:01,738 INFO   Validation loss: 0.300, acc: 0.854, pur: 0.701, eff: 0.860.
+2020-06-05 12:51:01,750 INFO Finished training
+2020-06-05 12:51:01,750 INFO Train samples 500 time 159.992 s rate 3.12516 samples/s
+2020-06-05 12:51:01,751 INFO Valid samples 100 time 14.8313 s rate 6.74252 samples/s
+2020-06-05 12:51:01,751 INFO All done!
+2020-06-05 12:51:01,751 INFO Initialising
+2020-06-05 12:51:01,760 INFO Processing finished, in time 0.008905 for 0 events
+2020-06-05 12:51:01,763 INFO Initialized rank 0 out of 1
+2020-06-05 12:51:01,763 INFO Configuration: {'resume': False, 'trainer': {'name': 'gnn_sparse'}, 'data': {'name': 'hitgraphs_sparse', 'n_train': 500, 'n_valid': 100, 'real_weight': 1, 'batch_size': 1, 'n_workers': 4, 'input_dir': '/global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/triplet_graphs'}, 'model': {'name': 'resgnn', 'input_dim': 7, 'hidden_dim': 64, 'hidden_activation': 'Tanh', 'n_graph_iters': 4, 'layer_norm': True, 'loss_func': 'binary_cross_entropy_with_logits'}, 'optimizer': {'name': 'Adam', 'learning_rate': 0.0005, 'weight_decay': 0.0001}, 'training': {'n_total_epochs': 5}, 'output_dir': '/global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/triplet_gnn'}
+2020-06-05 12:51:01,763 INFO Saving job outputs to /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/triplet_gnn
+2020-06-05 12:51:01,763 INFO Writing config via pickle to /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging/train/Training_Example_4/artifacts/Training_Example_4/triplet_gnn/config.pkl
+2020-06-05 12:51:01,767 INFO Loaded 500 training samples
+2020-06-05 12:51:01,768 INFO Loaded 100 validation samples
+2020-06-05 12:51:01,770 INFO Model: 
+GNNSegmentClassifier(
+  (input_network): Sequential(
+    (0): Linear(in_features=7, out_features=64, bias=True)
+    (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+    (2): Tanh()
+  )
+  (edge_network): EdgeNetwork(
+    (network): Sequential(
+      (0): Linear(in_features=128, out_features=64, bias=True)
+      (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (2): Tanh()
+      (3): Linear(in_features=64, out_features=64, bias=True)
+      (4): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (5): Tanh()
+      (6): Linear(in_features=64, out_features=64, bias=True)
+      (7): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (8): Tanh()
+      (9): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (node_network): NodeNetwork(
+    (network): Sequential(
+      (0): Linear(in_features=192, out_features=64, bias=True)
+      (1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (2): Tanh()
+      (3): Linear(in_features=64, out_features=64, bias=True)
+      (4): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (5): Tanh()
+      (6): Linear(in_features=64, out_features=64, bias=True)
+      (7): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (8): Tanh()
+      (9): Linear(in_features=64, out_features=64, bias=True)
+      (10): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+      (11): Tanh()
+    )
+  )
+)
+Parameters: 43009
+2020-06-05 12:51:01,770 INFO Epoch 0
+--------------------- 
+ Training triplets... 
+--------------------
+2020-06-05 12:52:48,199 INFO   Training loss: 0.279
+2020-06-05 12:52:48,200 INFO   Training time: 106 seconds.
+2020-06-05 12:52:57,083 INFO   Validation loss: 0.127, acc: 0.948, pur: 0.870, eff: 0.954.
+2020-06-05 12:52:57,092 INFO Epoch 1
+2020-06-05 12:54:43,840 INFO   Training loss: 0.107
+2020-06-05 12:54:43,841 INFO   Training time: 106 seconds.
+2020-06-05 12:54:54,512 INFO   Validation loss: 0.091, acc: 0.964, pur: 0.942, eff: 0.928.
+2020-06-05 12:54:54,523 INFO Epoch 2
+2020-06-05 12:56:31,916 INFO   Training loss: 0.085
+2020-06-05 12:56:31,917 INFO   Training time: 97 seconds.
+2020-06-05 12:56:39,684 INFO   Validation loss: 0.073, acc: 0.972, pur: 0.947, eff: 0.954.
+2020-06-05 12:56:39,926 INFO Epoch 3
+2020-06-05 12:58:10,597 INFO   Training loss: 0.076
+2020-06-05 12:58:10,598 INFO   Training time: 90 seconds.
+2020-06-05 12:58:18,020 INFO   Validation loss: 0.070, acc: 0.973, pur: 0.948, eff: 0.955.
+2020-06-05 12:58:18,030 INFO Epoch 4
+2020-06-05 12:59:51,424 INFO   Training loss: 0.069
+2020-06-05 12:59:51,424 INFO   Training time: 93 seconds.
+2020-06-05 12:59:58,864 INFO   Validation loss: 0.069, acc: 0.974, pur: 0.933, eff: 0.976.
+2020-06-05 12:59:58,876 INFO Finished training
+2020-06-05 12:59:58,876 INFO Train samples 500 time 98.9276 s rate 5.0542 samples/s
+2020-06-05 12:59:58,876 INFO Valid samples 100 time 8.43686 s rate 11.8527 samples/s
+2020-06-05 12:59:58,876 INFO All done!

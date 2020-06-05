@@ -198,7 +198,7 @@ def main(args, force=False):
       return net
 
   utils.initialize_experiment_if_needed(experiment_dir, evaluate_only=False)
-  utils.initialize_logger(experiment_dir)
+#   utils.initialize_logger(experiment_dir)
 
 
   train_path = os.path.join(load_path, 'train.pickle')

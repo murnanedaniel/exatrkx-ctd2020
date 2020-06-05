@@ -33,17 +33,19 @@ def parse_args():
         print("No config file provided. Setting default to be: Seeding/src/configs/seed.yaml")
         try:
             with open(args.config_file) as f:
-            config = yaml.load(f, Loader=yaml.FullLoader)
-            defaults.update(config)
+                config = yaml.load(f, Loader=yaml.FullLoader)
+                defaults.update(config)
         except:
             print("But default config file is not present. Create one to get started and include it when running the pipeline.")
+            raise
     else:
         try:
             with open(args.config_file) as f:
-            config = yaml.load(f, Loader=yaml.FullLoader)
-            defaults.update(config)
+                config = yaml.load(f, Loader=yaml.FullLoader)
+                defaults.update(config)
         except:
             print("Config file that was provided does not exist.")
+            raise
     
     
     # Handle command-line changes to default arguments
@@ -67,5 +69,8 @@ def parse_args():
     add_arg('--rank-gpu', action='store_true')
     add_arg('--ranks-per-node', default=8)
     add_arg('--gpu', type=int)
+    add_arg('--fom', default=None, choices=['last', 'best'],
+            help='Print figure of merit for HPO/PBT')
+    add_arg('--interactive', action='store_true')
         
     return parser.parse_args(remaining_args)

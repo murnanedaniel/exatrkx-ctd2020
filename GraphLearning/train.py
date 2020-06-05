@@ -55,11 +55,7 @@ def parse_args():
     return parser.parse_args()
 
 def config_logging(verbose, output_dir, append=False, rank=0):
-    log_format = '%(asctime)s %(levelname)s %(message)s'
     log_level = logging.DEBUG if verbose else logging.INFO
-    stream_handler = logging.StreamHandler(stream=sys.stdout)
-    stream_handler.setLevel(log_level)
-    handlers = [stream_handler]
     if output_dir is not None:
         log_dir = output_dir
         os.makedirs(log_dir, exist_ok=True)
@@ -67,8 +63,7 @@ def config_logging(verbose, output_dir, append=False, rank=0):
         mode = 'a' if append else 'w'
         file_handler = logging.FileHandler(log_file, mode=mode)
         file_handler.setLevel(log_level)
-        handlers.append(file_handler)
-    logging.basicConfig(level=log_level, format=log_format, handlers=handlers)
+    logging.getLogger().addHandler(file_handler)
     # Suppress annoying matplotlib debug printouts
     logging.getLogger('matplotlib').setLevel(logging.ERROR)
 

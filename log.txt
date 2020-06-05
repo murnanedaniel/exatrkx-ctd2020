@@ -1,0 +1,8 @@
+--------------------- 
+ Preprocessing... 
+--------------------
+Processing raw data for experiment Training_Example_4
+Loading detector...
+Detector loaded.
+Preprocessing all events
+Using 80 cpu cores

@@ -24,7 +24,7 @@ def construct_dataset(paths, nb_samples, feature_names):
     hits_a = []
     hits_b = []
     targets = []
-    print("WARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ")
+    print("Sampling hit pairs for training dataset. \nWARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ")
     for i, path in enumerate(paths):
         sample = load_event(path)
         hits, particle_ids, vols, layers = process_sample(sample, feature_names)

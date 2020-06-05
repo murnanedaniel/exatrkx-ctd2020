@@ -69,8 +69,9 @@ def get_edge_scores(load_path, existing_files, doublet_artifacts, n_tasks, task)
     test_loader = get_data_loader(load_path, n_tasks, task)
 
     # Apply the model
+    logging.info("Applying doublet model for scores as for input to triplet model...")
     test_preds, test_targets = trainer.device_predict(test_loader)
-    print("Graph prediction complete")
+    print("Doublet graph prediction complete")
 #     test_preds, test_targets = [a.cpu() for a in test_preds], [a.cpu() for a in test_targets]
     doublet_data = test_loader.dataset
     ID_data, eventnames = get_IDs(load_path, n_tasks, task)

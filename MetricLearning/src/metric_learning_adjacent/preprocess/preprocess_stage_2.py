@@ -35,7 +35,7 @@ def construct_dataset(paths, nb_samples, feature_names, emb_model):
     hits_a = []
     hits_b = []
     targets = []
-    print("WARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ")
+    print("Sampling hit pairs for training dataset. \nWARNING: ASSUMING FIRST 3 FEATURES OF HITS ARE XYZ")
     emb_model = emb_model.to(DEVICE)
     emb_model.eval()
     for i, path in enumerate(paths):

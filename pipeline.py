@@ -9,7 +9,7 @@ import yaml
 # UTILS
 from utils.pipeline_utils import parse_args
 
-# BUILDING PIPELINE IMPORTS
+# CLASSIFICATION PIPELINE IMPORTS
 sys.path.append('.')
 from MetricLearning.src.preprocess_with_dir import preprocess
 from MetricLearning.src.metric_learning_adjacent import build_graphs as build_doublet_graphs
@@ -129,7 +129,7 @@ def train(args):
     
     ## BUILD DOUBLET GRAPHS
     build_doublet_graphs.main(args, force=force[force_order["train_doublets"]])  
-    
+        
     ## TRAIN DOUBLET GNN
     train_gnn.main(args, force=force[force_order["train_doublets"]], gnn='doublet')
     if args.stage == 'train_doublets': return
@@ -147,6 +147,11 @@ def train(args):
 if __name__ == "__main__":
     
     args = parse_args()
+    
+    # Define verbosity for whole pipeline
+    log_format = '%(asctime)s %(levelname)s %(message)s'
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logging.basicConfig(level=log_level, format=log_format)
     
     if args.stage in ["seed", "label", "preprocess", "build_doublets", "build_triplets"]:
         classify(args)
