@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+# TAKE IN CONFIG FILE & OUTPUT FILE NAME
+
+
+# System imports
+import os
+import sys
+
+# External imports
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Pick up local packages
+sys.path.append('..')
+
+# Local imports
+from GraphLearning.src.trainers import get_trainer
+from utils.data_utils import (load_config_file, load_config_dir, load_summaries,
+                      plot_train_history, get_test_data_loader,
+                      compute_metrics, plot_metrics, draw_sample_xy)
+
+def parse_args():
+    """Parse command line arguments."""
+    hpo_warning = 'Flag overwrites config value if set, used for HPO and PBT runs primarily'
+    parser = argparse.ArgumentParser('train.py')
+    add_arg = parser.add_argument
+    add_arg('config', nargs='?', default='configs/hello.yaml')
+    
+    return parser.parse_args()
+
+
+
+def main(args):
+    config_file = args.config
+
+    config = load_config_file(config_file)
+    print('\nConfiguration: \n', config)
+
+    doublet_summaries, triplet_summaries = load_summaries(config)
+    print('\nDoublet training summaries: \n', doublet_summaries)
+    print('\nTriplet training summaries: \n', triplet_summaries)
+
+    doublet_artifact_dir, triplet_artifact_dir = os.path.join(config['output_dir'], "doublet"), os.path.join(config['output_dir'], "triplet")
+    
+    
+    # Run Doublet GNN Performance metrics
+    
+    best_idx = summaries.valid_loss.idxmin()
+    # Build the trainer and load best checkpoint
+    trainer = get_trainer(output_dir=doublet_artifact_dir, gpu=0, **config['trainer'])
+    trainer.build_model(optimizer_config=config['optimizer'], **config['model'])
+
+    best_epoch = summaries.epoch.loc[best_idx]
+    trainer.load_checkpoint(checkpoint_id=best_epoch)
+
+    print(trainer.model)
+    print('Parameters:', sum(p.numel() for p in trainer.model.parameters()))
+    
+    
+    # Run Triplet GNN Performance metrics
+    
+    # Build the trainer and load best checkpoint
+    trainer = get_trainer(output_dir=config['output_dir'], gpu=0, **config['trainer'])
+    trainer.build_model(optimizer_config=config['optimizer'], **config['model'])
+
+    best_epoch = summaries.epoch.loc[best_idx]
+    trainer.load_checkpoint(checkpoint_id=best_epoch)
+
+    print(trainer.model)
+    print('Parameters:', sum(p.numel() for p in trainer.model.parameters()))
+
+
+if __name__ == '__main__':
+    
+    # Parse the command line
+    args = parse_args()
+    
+    main(args)

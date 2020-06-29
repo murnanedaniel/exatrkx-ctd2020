@@ -1,4 +1,4 @@
-# CTD2020 ExatrkX
+# CTD2020 ExatrkX Pipeline
 
 Each `stage` of the pipeline can be executed separately by running `python pipeline.py [path/to/configs]` followed by one of the stages:
 
@@ -8,7 +8,9 @@ Each `stage` of the pipeline can be executed separately by running `python pipel
 
 ![](docs/pipeline.png)
 
-## Setting Up Environment
+# Setting Up
+
+## Environment
 
 These instructions assume you are running [miniconda](https://docs.conda.io/en/latest/miniconda.html) on a linux system.
 1. Create an exatrkx conda environment
@@ -28,11 +30,11 @@ To leverage all available resources in your system, there are two versions of so
 ```
 nvcc --version
 ```
-to get your CUDA version. If it returns an error, you do not have GPU enabled, then set the environment variable to `export CUDA=cpu`. Otherwise set your variable to `export CUDA=cuXXX`, where cuXXX is cu92, cu101 or cu102 for CUDA versions 9.2, 10.1, or 10.2. Setting this variable correctly is essential to having all libraries aligned correctly. Then install PyTorch requirements
+to get your CUDA version. If it returns an error, then you do not have GPU enabled and should set the environment variable to `export CUDA=cpu`. Otherwise set your variable to `export CUDA=cuXXX`, where cuXXX is cu92, cu101 or cu102 for CUDA versions 9.2, 10.1, or 10.2. Setting this variable correctly is essential to having all libraries aligned correctly. Then install PyTorch requirements
 ```
 pip install --user -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html -f https://pytorch-geometric.com/whl/torch-1.5.0.html
 ```
-Finally run the setup to ensure dependencies are available:
+Finally run the setup to ensure dependencies and visualisation scripts are available:
 
 ```
 pip install -e .
@@ -46,11 +48,15 @@ pip install cupy
 
 An entire `classify` or `train` pipeline can be run from the root directory using the `pipeline.py` script. Stages of these pipelines will produce either `classify/` or `train/` and `artifacts/` data in your `data/storage/path` directory.
 
-## Example Run
+--------------------
+
+# Running
+
+### 1. Get model artifacts
 
 To run the full pipeline to build seeds from TrackML data contained in `/path/to/trackml-data` (which can be downloaded from [Kaggle](https://www.kaggle.com/c/trackml-particle-identification)), we first need model files that will be used for the learned embedding and GNN classifications. You have two options:
 
-### 1. Run Training Pipeline
+#### a. Run training pipeline
 
 Train the models yourself by including the TrackML and data storage paths in `GraphLearning/configs/pipeline_train.yaml`, then run
 ```
@@ -58,18 +64,59 @@ python pipeline.py GraphLearning/configs/pipeline_train.yaml train
 ```
 to get model artifacts saved into the folder `data/storage/path/artifacts/Training_Example`, which can be pointed to in the next step.
 
-### 2. Download Model Files
+#### b. Download model artifacts
 
 These four folders (embedding, filter, doublet GNN & triplet GNN) can be downloaded from [NEED TO CONFIRM DOWNLOAD LOCATION](www.google.com).
 
-Assuming these have been downloaded and stored in `/artifact/storage/path/[metric_learning_emb, metric_learning_filter, doublet_gnn, triplet_gnn]`, we alter a config file to point to `/artifact/storage/path`, as well as intermediate data and final seed data in `/data/storage/path/`. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the experiment name "Seeding_Example" is in [the seed configd folder](Seeding/configs). We run
+### 2. Make config file
+
+Assuming the artifacts have been trained or downloaded and stored in `/artifact/storage/path/[metric_learning_emb, metric_learning_filter, doublet_gnn, triplet_gnn]`, we alter a config file to point to `/artifact/storage/path`, as well as intermediate data and final seed data in `/data/storage/path/`. To differentiate this run, we give it a name. An example config file `seed_example.yaml` with the inference run name "Seeding_Example" is in [the seed config folder](Seeding/configs). 
+
+### 3. Run inference
+
+We run
 ```
 python pipeline.py Seeding/configs/seed_example.yaml seed
 ```
+or
+```
+python pipeline.py Labelling/configs/label_example.yaml label
+```
 
-This will produce a full set of event files in the seed folder (note that seeding is the default, so the `seed` specification is actually unnecessary in this case).
 
-## Other Use Cases
+This will produce a full set of event files in the seed or label folder (note that seeding is the default, if no particular stage is specified).
+
+---------------------
+
+# Performance
+
+There are several scripts that can be used to test the performance of each stage of training/inference. 
+
+### GNN Performance
+
+Run 
+```
+evaluate_gnn GraphLearning/configs/pipeline_train.yaml GraphLearning/results/example_output.pdf
+```
+to produce a set of metrics for the doublet and triplet GNNs. The first argument is the config file used to train the artifacts, and the second is the name of the file to save plots to. The metrics produced include ROC curves, true/false histograms, and training performance such as loss and accuracy over each epoch.
+
+### Seeding Performance
+Run
+```
+evaluate_seeds Seedings/configs/seed_example.yaml Seedings/results/example_output.pdf
+```
+to produce the efficiency and purity of the seeding output. These are plotted against $p_T$ and $\eta$. 
+
+### Labelling Performance
+Run 
+```
+evaluate_labels Labelling/configs/label_example.yaml Labelling/results/example_output.pdf
+```
+to output the TrackML score for the labels produced by the config file given as the first argument.
+
+---------------------
+
+# Other Use Cases
 
 ### Forcing Re-Run
 
@@ -94,6 +141,3 @@ The pipeline is set up to train the models required for the building stages. Jus
 preprocess --> train_embedding --> train_filter --> train_doublets --> train_triplets
 ```
 Each of the `train_X` stages will produce model artifacts in the folder given by the experiment name specified in the config file. Once the full training pipeline is complete, one can then run any seeding, labelling or classification stages detailed above.
-
-
-## Further Configuration and Experimentation

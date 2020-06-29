@@ -35,5 +35,6 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     scripts=[
+        'scripts/evaluate_gnn'
     ],
 )
