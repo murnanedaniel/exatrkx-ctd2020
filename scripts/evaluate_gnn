@@ -10,22 +10,24 @@ import sys
 # External imports
 import matplotlib.pyplot as plt
 import numpy as np
+import argparse
 
 # Pick up local packages
 sys.path.append('..')
 
 # Local imports
 from GraphLearning.src.trainers import get_trainer
-from utils.data_utils import (load_config_file, load_config_dir, load_summaries,
-                      plot_train_history, get_test_data_loader,
-                      compute_metrics, plot_metrics, draw_sample_xy)
+from utils.data_utils import (get_output_dirs, load_config_file, load_config_dir, load_summaries,
+                      save_train_history, get_test_data_loader,
+                      compute_metrics, save_metrics, draw_sample_xy)
 
 def parse_args():
     """Parse command line arguments."""
     hpo_warning = 'Flag overwrites config value if set, used for HPO and PBT runs primarily'
     parser = argparse.ArgumentParser('train.py')
     add_arg = parser.add_argument
-    add_arg('config', nargs='?', default='configs/hello.yaml')
+    add_arg('config', nargs='?', default='GraphLearning/configs/pipeline_train.yaml')
+    add_arg('results_dir', nargs='?', default='GraphLearning/results/example')
     
     return parser.parse_args()
 
@@ -37,40 +39,67 @@ def main(args):
     config = load_config_file(config_file)
     print('\nConfiguration: \n', config)
 
-    doublet_summaries, triplet_summaries = load_summaries(config)
-    print('\nDoublet training summaries: \n', doublet_summaries)
-    print('\nTriplet training summaries: \n', triplet_summaries)
+    summaries_doublet, summaries_triplet = load_summaries(config)
+    print('\nDoublet training summaries: \n', summaries_doublet)
+    print('\nTriplet training summaries: \n', summaries_triplet)
 
-    doublet_artifact_dir, triplet_artifact_dir = os.path.join(config['output_dir'], "doublet"), os.path.join(config['output_dir'], "triplet")
+    artifact_dir_doublet, artifact_dir_triplet = get_output_dirs(config)
     
     
     # Run Doublet GNN Performance metrics
     
-    best_idx = summaries.valid_loss.idxmin()
+    best_idx_doublet = summaries_doublet.valid_loss.idxmin()
+    
     # Build the trainer and load best checkpoint
-    trainer = get_trainer(output_dir=doublet_artifact_dir, gpu=0, **config['trainer'])
-    trainer.build_model(optimizer_config=config['optimizer'], **config['model'])
+    trainer_doublet = get_trainer(output_dir=artifact_dir_doublet, gpu=0, **config['doublet']['trainer'])
+    trainer_doublet.build_model(optimizer_config=config['doublet']['optimizer'], **config['doublet']['model'])
 
-    best_epoch = summaries.epoch.loc[best_idx]
-    trainer.load_checkpoint(checkpoint_id=best_epoch)
+    best_epoch_doublet = summaries_doublet.epoch.loc[best_idx_doublet]
+    trainer_doublet.load_checkpoint(checkpoint_id=best_epoch_doublet)
 
-    print(trainer.model)
-    print('Parameters:', sum(p.numel() for p in trainer.model.parameters()))
+    print(trainer_doublet.model)
+    print('Parameters:', sum(p.numel() for p in trainer_doublet.model.parameters()))
     
     
     # Run Triplet GNN Performance metrics
     
+    best_idx_triplet = summaries_triplet.valid_loss.idxmin()
+    
     # Build the trainer and load best checkpoint
-    trainer = get_trainer(output_dir=config['output_dir'], gpu=0, **config['trainer'])
-    trainer.build_model(optimizer_config=config['optimizer'], **config['model'])
+    trainer_triplet = get_trainer(output_dir=artifact_dir_triplet, gpu=0, **config['triplet']['trainer'])
+    trainer_triplet.build_model(optimizer_config=config['doublet']['optimizer'], **config['triplet']['model'])
 
-    best_epoch = summaries.epoch.loc[best_idx]
-    trainer.load_checkpoint(checkpoint_id=best_epoch)
+    best_epoch_triplet = summaries_triplet.epoch.loc[best_idx_triplet]
+    trainer_triplet.load_checkpoint(checkpoint_id=best_epoch_triplet)
 
-    print(trainer.model)
-    print('Parameters:', sum(p.numel() for p in trainer.model.parameters()))
+    print(trainer_triplet.model)
+    print('Parameters:', sum(p.numel() for p in trainer_triplet.model.parameters()))
 
-
+    # Evaluate performance on test dataset
+    
+    n_test = 16 # CHANGE THIS 80
+    
+    test_loader_doublet, _ = get_test_data_loader(config['doublet'], n_test=n_test)
+    test_preds_doublet, test_targets_doublet = trainer_doublet.device_predict(test_loader_doublet)
+    test_metrics_doublet = compute_metrics(test_preds_doublet, test_targets_doublet)
+    save_metrics(summaries_doublet, output_dir, 'doublet', test_preds_doublet, test_targets_doublet, test_metrics_doublet, roc_scale="log")
+    
+    test_loader_triplet, _ = get_test_data_loader(config['triplet'], n_test=n_test)
+    test_preds_triplet, test_targets_triplet = trainer_doublet.device_predict(test_loader_triplet)
+    test_metrics_triplet = compute_metrics(test_preds_triplet, test_targets_triplet)
+    save_metrics(summaries_triplet, output_dir, 'doublet', test_preds_triplet, test_targets_triplet, test_metrics_triplet, roc_scale="log")
+    
+    # Visualisations
+    output_dir = os.path.join(args.results_dir, config['name'])
+    os.makedirs(output_dir, exist_ok = True)
+    
+    training_plots_doublet = save_train_history(summaries_doublet, output_dir, 'doublet')
+    
+    training_plots_triplet = save_train_history(summaries_triplet, output_dir, 'triplet')
+    
+    
+    
+    
 if __name__ == '__main__':
     
     # Parse the command line

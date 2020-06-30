@@ -102,9 +102,8 @@ def train(args):
     
     print('--------------------- \n Preprocessing... \n--------------------')
     
-    args.data_storage_path = os.path.join(args.data_storage_path, "train", args.name)
-    args.artifact_storage_path = os.path.join(args.data_storage_path, "artifacts", args.name)
-
+    args.data_storage_path, args.artifact_storage_path = os.path.join(args.data_storage_path, "train", args.name), os.path.join(args.data_storage_path, "artifacts", args.name)
+    
     preprocess_data_path, feature_names = preprocess.main(args, force=force[force_order["preprocess"]])
 
     print('--------------------- \n Training embedding... \n--------------------')

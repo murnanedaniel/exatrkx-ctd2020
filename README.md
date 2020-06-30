@@ -62,7 +62,7 @@ Train the models yourself by including the TrackML and data storage paths in `Gr
 ```
 python pipeline.py GraphLearning/configs/pipeline_train.yaml train
 ```
-to get model artifacts saved into the folder `data/storage/path/artifacts/Training_Example`, which can be pointed to in the next step.
+to get model artifacts saved into the folder `data/storage/path/artifacts/Training_Example`, which can be pointed to in the next step. To see the performance of the training, you can create some visualisations, as described below in **Performance**.
 
 #### b. Download model artifacts
 

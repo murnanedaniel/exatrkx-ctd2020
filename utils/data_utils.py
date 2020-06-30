@@ -20,10 +20,12 @@ from torch.utils.data import Subset, DataLoader
 from GraphLearning.src.models import get_model
 from GraphLearning.src.datasets.hitgraphs_sparse import HitGraphDataset
 
-def get_output_dir(config):
+def get_output_dirs(config):
     data_dir = os.path.expandvars(config['data_storage_path'])
-    artifact_dir = os.path.join(data_dir, config['name'], "artifacts")
-    return artifact_dir
+    artifact_dir = os.path.join(data_dir, "artifacts", config['name'])
+    doublet_artifacts = os.path.join(artifact_dir, "doublet_gnn")
+    triplet_artifacts = os.path.join(artifact_dir, "triplet_gnn")
+    return doublet_artifacts, triplet_artifacts
 
 def get_input_dir(config):
     return os.path.expandvars(config['data']['input_dir'])
@@ -43,9 +45,7 @@ def load_config_dir(result_dir):
 load_config = load_config_file
 
 def load_summaries(config):
-    artifact_dir = get_output_dir(config)
-    doublet_artifacts = os.path.join(artifact_dir, "doublets")
-    triplet_artifacts = os.path.join(artifact_dir, "triplets")
+    doublet_artifacts, triplet_artifacts = get_output_dirs(config)
     doublet_summary_file = os.path.join(doublet_artifacts, 'summaries_0.csv')
     triplet_summary_file = os.path.join(triplet_artifacts, 'summaries_0.csv')
     return pd.read_csv(doublet_summary_file), pd.read_csv(triplet_summary_file)
@@ -140,6 +140,19 @@ def compute_metrics(preds, targets, threshold=0.5):
                    roc_fpr=roc_fpr, roc_tpr=roc_tpr, roc_thresh=roc_thresh, roc_auc=roc_auc)
 
 def plot_train_history(summaries, figsize=(12, 10), loss_yscale='linear'):
+    axs, fig = create_train_history(summaries, figsize, loss_yscale)
+
+    plt.tight_layout()
+
+def save_train_history(summaries, output_dir, name, format="pdf", figsize=(12, 10), loss_yscale='linear'):
+    
+    axs, fig = create_train_history(summaries, figsize, loss_yscale)
+    
+    output_name = os.path.join(output_dir, name+'_train_history.'+format)
+    
+    fig.savefig(output_name, format=format)
+
+def create_train_history(summaries, figsize=(12, 10), loss_yscale='linear'):
     fig, axs = plt.subplots(nrows=2, ncols=2, figsize=figsize)
     axs = axs.flatten()
 
@@ -168,9 +181,20 @@ def plot_train_history(summaries, figsize=(12, 10), loss_yscale='linear'):
     axs[3].set_xlabel('Epoch')
     axs[3].set_ylabel('Learning rate')
 
-    plt.tight_layout()
+    return axs, fig
 
-def plot_metrics(preds, targets, metrics, roc_scale="linear", tf_scale='linear'):
+def plot_metrics(preds, targets, metrics, roc_scale="linear", tf_scale='linear')
+    
+    axs, fig = create_metrics(preds, targets, metrics, roc_scale, tf_scale)
+    plt.tight_layout()
+    
+def save_metrics(summaries, output_dir, name, preds, targets, metrics, format="pdf", roc_scale="linear", tf_scale='linear')
+    
+    axs, fig = create_metrics(preds, targets, metrics, roc_scale, tf_scale)
+    output_name = os.path.join(output_dir, name+'_metrics.'+format)
+    fig.savefig(output_name, format=format)
+
+def create_metrics(preds, targets, metrics, roc_scale="linear", tf_scale='linear'):
     # Prepare the values
     preds = np.concatenate(preds)
     targets = np.concatenate(targets)
@@ -201,7 +225,8 @@ def plot_metrics(preds, targets, metrics, roc_scale="linear", tf_scale='linear')
     ax2.set_title('ROC curve, AUC = %.3f' % metrics.roc_auc)
     ax2.set_xscale(roc_scale)
 
-    plt.tight_layout()
+    return (ax0, ax1, ax2), fig
+    
 
 def plot_outputs_roc(preds, targets, metrics):
     # Prepare the values

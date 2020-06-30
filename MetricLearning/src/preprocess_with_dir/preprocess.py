@@ -353,7 +353,7 @@ def preprocess_dataset(data_path,
     t1 = time.time()
     print("Preprocessing finished")
     print("Required {:.2f} minutes for {} files".format((t1-t0)/60, len(event_paths)))
-    print("{:.4f} seconds per file".format(cpu_count*(t1-t0) / len(event_paths)))
+    print("{:.4f} cpu-seconds per file".format(cpu_count*(t1-t0) / len(event_paths)))
 
 def main(args,
          force=False,

@@ -2,7 +2,7 @@
 # Overall pipeline
 
 # stage: seed
-name: Training_Example_4
+name: Training_Example_5
 data_storage_path: /global/cscratch1/sd/danieltm/ExaTrkX/processed_sparse/train_debugging  # Change this name to be more descriptive
 
 #_________________
@@ -24,6 +24,23 @@ emb_dim: 8
 batch_size: 2000
 lr_start: 0.001
 max_nb_epochs: 5
+
+#_________________
+# Doublet building
+
+doublet_output_dir:
+emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
+filter_threshold: 0.95  # This is the threshold of the metric filter
+num_phi_sections: 8
+embed_feats: False
+augmented: False
+
+#_________________
+# Triplet building
+
+doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
+include_scores: True
+
 
 #_________________
 # GNN Training
@@ -67,7 +84,7 @@ triplet:
         name: hitgraphs_sparse
         n_train: 500
         n_valid: 100
-        real_weight: 1   # 0.5 / 0.2
+        real_weight: 1
         batch_size: 1
         n_workers: 4
 
@@ -88,18 +105,3 @@ triplet:
     training:
         n_total_epochs: 5
 
-#_________________
-# Doublet building
-
-doublet_output_dir:
-emb_radius: 0.4 # This is the radius~threshold of the embedded neighborhood
-filter_threshold: 0.95  # This is the threshold of the metric filter
-num_phi_sections: 8
-embed_feats: False
-augmented: False
-
-#_________________
-# Triplet building
-
-doublet_threshold: 0.1 # This is the threshold of the doublet GNN score
-include_scores: True
